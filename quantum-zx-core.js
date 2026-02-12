@@ -6,6 +6,9 @@
  */
 
 class ZXSpider {
+    // Static counter for unique IDs
+    static _counter = 0;
+
     /**
      * Represents a spider in the ZX-calculus
      * @param {string} color - 'green' (Z) or 'red' (X)
@@ -18,7 +21,7 @@ class ZXSpider {
         this.phase = phase;
         this.inputs = inputs;
         this.outputs = outputs;
-        this.id = Math.random().toString(36).substr(2, 9);
+        this.id = `zx_${ZXSpider._counter++}_${Date.now()}`;
     }
 
     /**
