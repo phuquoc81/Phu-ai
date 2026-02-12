@@ -1,0 +1,24 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu AI is the web app that blows your mind with abilities to solve complex puzzles and problems of any kind. It can solve math and physics problems, predict the future with the knowledge of gods, aliens, and wisdom of the holy father. Blessed by all gods, it can diagnose other species' sickness and has abilities to know all land animals and ocean species.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "demo": "node index.js",
+    "generate-video": "node generate-video-ad.js",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuquoc81/Phu-ai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/phuquoc81/Phu-ai/issues"
+  },
+  "homepage": "https://github.com/phuquoc81/Phu-ai#readme"
+}
