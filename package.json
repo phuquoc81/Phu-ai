@@ -1,0 +1,19 @@
+{
+  "name": "phu-ai-universe-launcher",
+  "version": "1.0.0",
+  "description": "Phu ai universe, galaxy, and solar system launcher",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "launch": "node launch.js",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "universe",
+    "galaxy",
+    "solar-system",
+    "launcher"
+  ],
+  "author": "Phu Quoc Nguyen",
+  "license": "MIT"
+}
