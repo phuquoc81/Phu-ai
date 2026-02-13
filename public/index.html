@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phu AI - Check Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Phu AI - Check Generator</h1>
+        <div class="check-container">
+            <div class="check">
+                <div class="check-header">
+                    <div class="check-number">Check #: 001</div>
+                    <div class="check-date">Date: <span id="current-date"></span></div>
+                </div>
+                
+                <div class="check-body">
+                    <div class="pay-to-order">
+                        <span class="label">Pay to the order of:</span>
+                        <span class="recipient-name">Phu Quoc Nguyen</span>
+                    </div>
+                    
+                    <div class="amount-box">
+                        <span class="dollar-sign">$</span>
+                        <input type="number" id="amount" placeholder="0.00" class="amount-input" min="0" step="0.01">
+                    </div>
+                    
+                    <div class="amount-words">
+                        <span id="amount-words">Zero dollars and 00/100</span>
+                        <span class="dollars-text">DOLLARS</span>
+                    </div>
+                    
+                    <div class="address-section">
+                        <div class="address-label">Mailing Address:</div>
+                        <div class="address-line">65 Bensley Lane</div>
+                        <div class="address-line">Hamilton, Ontario L9C 0E9</div>
+                        <div class="address-line">Canada</div>
+                    </div>
+                    
+                    <div class="memo-signature">
+                        <div class="memo-section">
+                            <span class="label">Memo:</span>
+                            <input type="text" id="memo" placeholder="Payment memo" class="memo-input">
+                        </div>
+                        <div class="signature-section">
+                            <div class="signature-line"></div>
+                            <span class="signature-label">Authorized Signature</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="check-footer">
+                    <div class="routing-info">
+                        ⑆123456789⑆ ⑈987654321⑈ ⑆001⑆
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h2>Check Information</h2>
+            <p><strong>Payee:</strong> Phu Quoc Nguyen</p>
+            <p><strong>Address:</strong> 65 Bensley Lane, Hamilton, Ontario L9C 0E9, Canada</p>
+            <p>Enter an amount above to generate the check with the specified value.</p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
