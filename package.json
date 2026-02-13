@@ -1,0 +1,32 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu ai is the webapp that blow your mind all with abillities to solve complex puzzles and solve problems of any kind and solve math, physic and predicted the future with the knowledge of gods aliens and wisdom of the holy father and blessed by all gods cần diagnos other species sickness and abillities to nó all land animals and ocean species.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuquoc81/Phu-ai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/phuquoc81/Phu-ai/issues"
+  },
+  "homepage": "https://github.com/phuquoc81/Phu-ai#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "sqlite3": "^5.1.7",
+    "stripe": "^20.3.1",
+    "uuid": "^13.0.0"
+  }
+}
