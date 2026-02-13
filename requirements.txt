@@ -1,0 +1,15 @@
+# White Hole Storage System Requirements
+# Python standard library only - no external dependencies required!
+
+# Core modules used:
+# - json: Configuration and data serialization
+# - os: File system operations
+# - typing: Type hints for better code quality
+# - datetime: Timestamp management
+# - sys: System-level operations
+
+# Python version requirement
+# python>=3.7
+
+# Note: This system is designed to work with Python standard library only
+# No external packages need to be installed
