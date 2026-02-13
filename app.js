@@ -322,9 +322,24 @@ function makeGuess() {
 // Affiliate Marketing
 function copyReferralLink() {
     const linkInput = document.getElementById('referralLink');
-    linkInput.select();
-    document.execCommand('copy');
-    showNotification('Referral link copied to clipboard!');
+    const linkText = linkInput.value;
+    
+    // Use modern Clipboard API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(linkText).then(() => {
+            showNotification('Referral link copied to clipboard!');
+        }).catch(() => {
+            // Fallback for older browsers
+            linkInput.select();
+            document.execCommand('copy');
+            showNotification('Referral link copied to clipboard!');
+        });
+    } else {
+        // Fallback for browsers without Clipboard API
+        linkInput.select();
+        document.execCommand('copy');
+        showNotification('Referral link copied to clipboard!');
+    }
     
     // Simulate a click
     appData.affiliateClicks++;
