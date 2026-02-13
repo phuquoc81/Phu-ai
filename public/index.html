@@ -15,8 +15,8 @@
                 <p class="tagline">Merge legendary swords, mine Bitcoin, complete tasks, earn real money!</p>
                 
                 <div class="auth-tabs">
-                    <button class="tab-btn active" onclick="showTab('login')">Login</button>
-                    <button class="tab-btn" onclick="showTab('register')">Register</button>
+                    <button class="tab-btn active" onclick="showTab('login', event)">Login</button>
+                    <button class="tab-btn" onclick="showTab('register', event)">Register</button>
                 </div>
 
                 <!-- Login Form -->
@@ -66,18 +66,18 @@
 
             <!-- Navigation -->
             <nav class="nav-tabs">
-                <button class="nav-btn active" onclick="switchTab('mining')">⛏️ Mining</button>
-                <button class="nav-btn" onclick="switchTab('swords')">⚔️ Swords</button>
-                <button class="nav-btn" onclick="switchTab('tasks')">📋 Tasks</button>
-                <button class="nav-btn" onclick="switchTab('affiliate')">🤝 Affiliate</button>
-                <button class="nav-btn" onclick="switchTab('withdraw')">💰 Withdraw</button>
+                <button class="nav-btn active" onclick="switchTab('mining', event)">⛏️ Mining</button>
+                <button class="nav-btn" onclick="switchTab('swords', event)">⚔️ Swords</button>
+                <button class="nav-btn" onclick="switchTab('tasks', event)">📋 Tasks</button>
+                <button class="nav-btn" onclick="switchTab('affiliate', event)">🤝 Affiliate</button>
+                <button class="nav-btn" onclick="switchTab('withdraw', event)">💰 Withdraw</button>
             </nav>
 
             <!-- Mining Tab -->
             <div id="mining-tab" class="tab-content active">
                 <div class="mining-container">
                     <h2>Bitcoin Mining Game</h2>
-                    <p class="subtitle">Click to mine Bitcoin! Each click earns you 0.00001 BTC</p>
+                    <p class="subtitle">Click to mine Bitcoin! Each click earns you 0.00001 BTC (simulated)</p>
                     
                     <div class="mining-stats">
                         <div class="stat-card">

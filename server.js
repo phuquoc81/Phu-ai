@@ -19,7 +19,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'legendary-swords-secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true in production with HTTPS
+    cookie: { secure: process.env.NODE_ENV === 'production' }
 }));
 
 // Authentication middleware

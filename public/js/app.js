@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Auth Functions
-function showTab(tab) {
+function showTab(tab, event) {
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
     const tabs = document.querySelectorAll('.tab-btn');
@@ -124,7 +124,7 @@ async function logout() {
 }
 
 // Navigation
-function switchTab(tabName) {
+function switchTab(tabName, event) {
     // Update nav buttons
     const navBtns = document.querySelectorAll('.nav-btn');
     navBtns.forEach(btn => btn.classList.remove('active'));
@@ -403,9 +403,34 @@ async function loadAffiliateInfo() {
 
 function copyReferralCode() {
     const input = document.getElementById('referral-code');
-    input.select();
-    document.execCommand('copy');
-    showMessage('affiliate-message', 'Referral code copied to clipboard!', 'success');
+    
+    // Use modern Clipboard API
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(input.value)
+            .then(() => {
+                showMessage('affiliate-message', 'Referral code copied to clipboard!', 'success');
+            })
+            .catch(err => {
+                console.error('Failed to copy:', err);
+                // Fallback to older method
+                input.select();
+                try {
+                    document.execCommand('copy');
+                    showMessage('affiliate-message', 'Referral code copied to clipboard!', 'success');
+                } catch (e) {
+                    showMessage('affiliate-message', 'Failed to copy code', 'error');
+                }
+            });
+    } else {
+        // Fallback for older browsers
+        input.select();
+        try {
+            document.execCommand('copy');
+            showMessage('affiliate-message', 'Referral code copied to clipboard!', 'success');
+        } catch (e) {
+            showMessage('affiliate-message', 'Failed to copy code', 'error');
+        }
+    }
 }
 
 // Withdrawal Functions

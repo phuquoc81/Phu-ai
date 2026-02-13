@@ -227,7 +227,6 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 
 For questions or issues:
 - Open an issue on GitHub
-- Email: support@phu-ai.com
 
 ## Disclaimer
 
