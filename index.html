@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phu Business Hub - Work, Play & Earn</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <h1>🚀 Phu Business Hub</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a></li>
+                <li><a href="#tasks" class="nav-link" data-section="tasks">Tasks</a></li>
+                <li><a href="#games" class="nav-link" data-section="games">Games</a></li>
+                <li><a href="#affiliate" class="nav-link" data-section="affiliate">Affiliate</a></li>
+                <li><a href="#learn" class="nav-link" data-section="learn">Learn</a></li>
+            </ul>
+            <div class="user-info">
+                <span class="balance">💰 Balance: $<span id="userBalance">0.00</span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <h2>Welcome to Your Business Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Tasks Completed</h3>
+                    <p class="stat-number" id="tasksCompleted">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Games Played</h3>
+                    <p class="stat-number" id="gamesPlayed">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Affiliate Earnings</h3>
+                    <p class="stat-number">$<span id="affiliateEarnings">0.00</span></p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Earnings</h3>
+                    <p class="stat-number">$<span id="totalEarnings">0.00</span></p>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <button class="btn btn-primary" onclick="navigateTo('tasks')">Start Working</button>
+                <button class="btn btn-success" onclick="navigateTo('games')">Play Games</button>
+                <button class="btn btn-info" onclick="navigateTo('affiliate')">Earn More</button>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section id="tasks" class="section">
+            <h2>Task Management</h2>
+            <div class="task-input">
+                <input type="text" id="taskInput" placeholder="Enter a new task...">
+                <button class="btn btn-primary" onclick="addTask()">Add Task</button>
+            </div>
+            <div class="task-list" id="taskList">
+                <!-- Tasks will be added here dynamically -->
+            </div>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games" class="section">
+            <h2>Micro-Task Games - Earn While You Play!</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <h3>🎯 Click Challenge</h3>
+                    <p>Click as many times as you can in 10 seconds!</p>
+                    <p class="reward">Reward: $0.10 per 50 clicks</p>
+                    <button class="btn btn-success" onclick="startClickGame()">Play Now</button>
+                    <div id="clickGameArea" class="game-area" style="display: none;">
+                        <p>Clicks: <span id="clickCount">0</span></p>
+                        <p>Time: <span id="clickTimer">10</span>s</p>
+                        <button class="btn-game" id="clickButton">Click Me!</button>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3>🧩 Memory Match</h3>
+                    <p>Match pairs of cards to earn rewards!</p>
+                    <p class="reward">Reward: $0.25 per game</p>
+                    <button class="btn btn-success" onclick="startMemoryGame()">Play Now</button>
+                    <div id="memoryGameArea" class="game-area" style="display: none;">
+                        <div id="memoryGrid" class="memory-grid"></div>
+                        <p>Matches: <span id="matchCount">0/8</span></p>
+                    </div>
+                </div>
+                
+                <div class="game-card">
+                    <h3>🎲 Lucky Number</h3>
+                    <p>Guess the number between 1-10!</p>
+                    <p class="reward">Reward: $0.50 per win</p>
+                    <button class="btn btn-success" onclick="startNumberGame()">Play Now</button>
+                    <div id="numberGameArea" class="game-area" style="display: none;">
+                        <input type="number" id="guessInput" min="1" max="10" placeholder="1-10">
+                        <button class="btn btn-primary" onclick="makeGuess()">Guess</button>
+                        <p id="numberResult"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Affiliate Section -->
+        <section id="affiliate" class="section">
+            <h2>Affiliate Marketing - Earn Passive Income</h2>
+            <div class="affiliate-info">
+                <p>Share your referral link and earn 10% commission on all sales from your referrals!</p>
+                <div class="referral-box">
+                    <label>Your Referral Link:</label>
+                    <input type="text" id="referralLink" readonly value="https://phubusiness.app/ref/PHU81">
+                    <button class="btn btn-primary" onclick="copyReferralLink()">Copy Link</button>
+                </div>
+            </div>
+            
+            <div class="affiliate-programs">
+                <h3>Featured Affiliate Programs</h3>
+                <div class="program-grid">
+                    <div class="program-card">
+                        <h4>💼 Business Tools</h4>
+                        <p>Promote productivity software</p>
+                        <p class="commission">Commission: 20%</p>
+                        <button class="btn btn-info" onclick="joinProgram('business')">Join Program</button>
+                    </div>
+                    <div class="program-card">
+                        <h4>📚 Online Courses</h4>
+                        <p>Share learning resources</p>
+                        <p class="commission">Commission: 30%</p>
+                        <button class="btn btn-info" onclick="joinProgram('courses')">Join Program</button>
+                    </div>
+                    <div class="program-card">
+                        <h4>🛒 E-commerce</h4>
+                        <p>Promote products & services</p>
+                        <p class="commission">Commission: 15%</p>
+                        <button class="btn btn-info" onclick="joinProgram('ecommerce')">Join Program</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="affiliate-stats">
+                <h3>Your Affiliate Performance</h3>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <p>Clicks: <strong id="affiliateClicks">0</strong></p>
+                    </div>
+                    <div class="stat-item">
+                        <p>Conversions: <strong id="affiliateConversions">0</strong></p>
+                    </div>
+                    <div class="stat-item">
+                        <p>Total Earned: <strong>$<span id="affiliateTotal">0.00</span></strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learn Section -->
+        <section id="learn" class="section">
+            <h2>Phuoptimizer 81 Learning Hub</h2>
+            <div class="learning-intro">
+                <p>Enhance your skills and knowledge to maximize your earnings!</p>
+            </div>
+            
+            <div class="courses-grid">
+                <div class="course-card">
+                    <h3>🎯 Task Optimization</h3>
+                    <p>Learn to complete tasks faster and more efficiently</p>
+                    <ul>
+                        <li>Time management strategies</li>
+                        <li>Productivity hacks</li>
+                        <li>Task prioritization</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="startCourse('optimization')">Start Learning</button>
+                </div>
+                
+                <div class="course-card">
+                    <h3>💰 Passive Income Mastery</h3>
+                    <p>Build multiple streams of passive income</p>
+                    <ul>
+                        <li>Affiliate marketing strategies</li>
+                        <li>Content creation tips</li>
+                        <li>Income scaling methods</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="startCourse('income')">Start Learning</button>
+                </div>
+                
+                <div class="course-card">
+                    <h3>🎮 Gaming Strategies</h3>
+                    <p>Master micro-task games for maximum rewards</p>
+                    <ul>
+                        <li>Game mechanics understanding</li>
+                        <li>Speed optimization</li>
+                        <li>Reward maximization</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="startCourse('gaming')">Start Learning</button>
+                </div>
+                
+                <div class="course-card">
+                    <h3>📈 Business Growth</h3>
+                    <p>Scale your earnings to the next level</p>
+                    <ul>
+                        <li>Marketing fundamentals</li>
+                        <li>Audience building</li>
+                        <li>Conversion optimization</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="startCourse('growth')">Start Learning</button>
+                </div>
+            </div>
+            
+            <div class="progress-section">
+                <h3>Your Learning Progress</h3>
+                <div class="progress-list" id="learningProgress">
+                    <p>Start a course to track your progress!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Phu Business Hub. Empowering work, play, and passive income.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
