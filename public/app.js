@@ -18,7 +18,15 @@ const miningAnimation = document.getElementById('miningAnimation');
 
 // Format currency
 function formatCurrency(value) {
-    return '$' + value.toFixed(6);
+    return '$' + (value || 0).toFixed(6);
+}
+
+// Format currency for upgrade costs (less decimal places)
+function formatUpgradeCost(value) {
+    if (value >= 1) {
+        return '$' + (value || 0).toFixed(2);
+    }
+    return formatCurrency(value);
 }
 
 // Update UI with user data
@@ -26,7 +34,7 @@ function updateUI(data) {
     balanceEl.textContent = formatCurrency(data.balance);
     miningPowerEl.textContent = data.miningPower + 'x';
     totalMinedEl.textContent = formatCurrency(data.totalMined);
-    upgradeCostEl.textContent = formatCurrency(data.upgradeCost);
+    upgradeCostEl.textContent = formatUpgradeCost(data.upgradeCost);
     
     // Update mine button reward text
     const rewardText = document.querySelector('.reward-text');
