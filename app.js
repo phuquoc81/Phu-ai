@@ -18,12 +18,28 @@ app.get('/', (req, res) => {
 app.post('/api/solve', (req, res) => {
   const { problem, type } = req.body;
   
+  // Input validation
+  if (!problem || typeof problem !== 'string' || problem.trim().length === 0) {
+    return res.status(400).json({
+      success: false,
+      error: 'Problem is required and must be a non-empty string'
+    });
+  }
+  
+  const validTypes = ['math', 'physics', 'puzzle', 'prediction', 'diagnosis', 'general'];
+  if (type && !validTypes.includes(type)) {
+    return res.status(400).json({
+      success: false,
+      error: 'Invalid problem type'
+    });
+  }
+  
   // Placeholder AI response
   const response = {
     success: true,
     problem: problem,
-    type: type,
-    solution: generateSolution(problem, type),
+    type: type || 'general',
+    solution: generateSolution(problem, type || 'general'),
     timestamp: new Date().toISOString()
   };
   
@@ -36,6 +52,8 @@ app.get('/health', (req, res) => {
 });
 
 // Generate solution based on problem type
+// NOTE: This is a placeholder implementation for demonstration purposes.
+// In production, this should be replaced with actual AI/problem-solving logic.
 function generateSolution(problem, type) {
   const solutions = {
     math: `Mathematical solution for: ${problem}`,
