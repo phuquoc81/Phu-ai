@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phu AI - Video Mining Webapp</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="Phu AI Video Mining - Earn Rewards!">
+    <meta property="og:description" content="Mine and earn rewards! Upgrade your mining power and maximize your earnings!">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="description" content="Video mining webapp with rewards system. Mine to earn $0.000001 per action and upgrade your mining power!">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Phu AI Video Mining</h1>
+            <p class="tagline">Mine Videos, Earn Rewards, Upgrade Power!</p>
+        </header>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-label">Balance</div>
+                <div class="stat-value" id="balance">$0.000000</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Mining Power</div>
+                <div class="stat-value" id="miningPower">1x</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Mined</div>
+                <div class="stat-value" id="totalMined">$0.000000</div>
+            </div>
+        </div>
+
+        <div class="mining-section">
+            <div class="mining-animation" id="miningAnimation">
+                <div class="video-icon">🎥</div>
+                <div class="mining-particles"></div>
+            </div>
+            <button class="mine-button" id="mineButton">
+                <span class="button-text">MINE NOW</span>
+                <span class="reward-text">+$0.000001</span>
+            </button>
+            <div class="mining-message" id="miningMessage"></div>
+        </div>
+
+        <div class="upgrade-section">
+            <h2>⚡ Upgrade Mining Power</h2>
+            <p>Increase your earnings per mine!</p>
+            <div class="upgrade-info">
+                <span>Next upgrade cost: <strong id="upgradeCost">$10.000000</strong></span>
+            </div>
+            <button class="upgrade-button" id="upgradeButton">
+                <span>🚀 UPGRADE POWER</span>
+            </button>
+            <div class="upgrade-message" id="upgradeMessage"></div>
+        </div>
+
+        <div class="share-section">
+            <h2>📢 Share & Invite Friends</h2>
+            <p>Share this mining webapp on social media!</p>
+            <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=YOUR_URL_HERE" target="_blank" class="share-btn facebook">
+                    📘 Facebook
+                </a>
+                <a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20amazing%20video%20mining%20webapp!&url=YOUR_URL_HERE" target="_blank" class="share-btn twitter">
+                    🐦 Twitter/Thread
+                </a>
+                <a href="https://www.youtube.com" target="_blank" class="share-btn youtube">
+                    📺 YouTube
+                </a>
+                <a href="https://www.twitch.tv" target="_blank" class="share-btn twitch">
+                    🎮 Twitch
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Phu AI Mining Webapp - Powered by advanced mining algorithms</p>
+            <p>Compatible with: Chrome, Firefox, Edge, Safari</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

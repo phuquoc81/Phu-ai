@@ -1,0 +1,349 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tagline {
+    font-size: 1.2rem;
+    opacity: 0.95;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    background: #f8f9fa;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    color: #667eea;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.mining-section {
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.mining-animation {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 30px;
+}
+
+.video-icon {
+    font-size: 120px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.mining-animation.active .video-icon {
+    animation: mine 0.5s ease-in-out;
+}
+
+@keyframes mine {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.2) rotate(10deg);
+    }
+    75% {
+        transform: scale(1.2) rotate(-10deg);
+    }
+}
+
+.mine-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 20px 60px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.mine-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+}
+
+.mine-button:active {
+    transform: translateY(0);
+}
+
+.reward-text {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.mining-message {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    min-height: 30px;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.upgrade-section {
+    background: #f8f9fa;
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.upgrade-section h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.upgrade-section p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.upgrade-info {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.upgrade-button {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+}
+
+.upgrade-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(245, 87, 108, 0.6);
+}
+
+.upgrade-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.upgrade-message {
+    margin-top: 15px;
+    font-size: 1rem;
+    min-height: 25px;
+    font-weight: bold;
+}
+
+.upgrade-message.success {
+    color: #28a745;
+}
+
+.upgrade-message.error {
+    color: #dc3545;
+}
+
+.share-section {
+    padding: 40px 30px;
+    text-align: center;
+}
+
+.share-section h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.share-section p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.share-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.share-btn {
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.share-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+    color: white;
+}
+
+.share-btn.twitter {
+    background: #1da1f2;
+    color: white;
+}
+
+.share-btn.youtube {
+    background: #ff0000;
+    color: white;
+}
+
+.share-btn.twitch {
+    background: #9146ff;
+    color: white;
+}
+
+footer {
+    background: #2c3e50;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+footer p {
+    margin: 5px 0;
+    opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .tagline {
+        font-size: 1rem;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .mine-button {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+    }
+
+    .share-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Particle effect */
+.mining-particles {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.mining-animation.active .mining-particles::before,
+.mining-animation.active .mining-particles::after {
+    content: '✨';
+    position: absolute;
+    font-size: 30px;
+    animation: sparkle 0.5s ease-out forwards;
+}
+
+.mining-animation.active .mining-particles::before {
+    left: -50px;
+}
+
+.mining-animation.active .mining-particles::after {
+    right: -50px;
+}
+
+@keyframes sparkle {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.5);
+    }
+}
