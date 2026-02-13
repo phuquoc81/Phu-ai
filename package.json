@@ -1,0 +1,22 @@
+{
+  "name": "phu-business-app",
+  "version": "1.0.0",
+  "description": "A business app that lets users work and play with passive income micro task games and affiliate marketing",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8080",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "keywords": [
+    "business",
+    "games",
+    "passive-income",
+    "affiliate-marketing",
+    "tasks"
+  ],
+  "author": "phuquoc81",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
