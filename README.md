@@ -16,12 +16,12 @@ Phu AI Browser is a revolutionary web browser that works like Google with cuttin
 ### Capabilities
 - 🔍 Advanced search with AI-powered results
 - 🌐 Google-like interface and functionality
-- 👽 Enhanced with Aliens Gods Species knowledge
-- 🧬 Ability to solve complex puzzles and problems
-- 🔮 Predictive analytics and future forecasting
-- 🌊 Diagnose various species' conditions
-- 🦁 Knowledge of all land animals and ocean species
-- 📐 Advanced math and physics problem solving
+- 👽 Enhanced with Aliens Gods Species knowledge (conceptual)
+- 🧬 AI-powered problem solving for complex puzzles
+- 🔮 Advanced analytics and pattern recognition
+- 🌊 Extensible framework for domain-specific knowledge integration
+- 🦁 AI assistant with broad knowledge base
+- 📐 Advanced math and physics problem solving capabilities
 
 ## 🛠️ Installation
 
