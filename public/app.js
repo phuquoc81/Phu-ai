@@ -1,7 +1,12 @@
 // Generate a unique user ID or retrieve from localStorage
 let userId = localStorage.getItem('userId');
 if (!userId) {
-    userId = 'user_' + Math.random().toString(36).substr(2, 9);
+    // Use crypto.randomUUID() for better security if available
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+        userId = 'user_' + crypto.randomUUID();
+    } else {
+        userId = 'user_' + Math.random().toString(36).substr(2, 9) + Date.now().toString(36);
+    }
     localStorage.setItem('userId', userId);
 }
 
@@ -165,3 +170,20 @@ fetchUserData();
 
 // Periodic data refresh (every 30 seconds)
 setInterval(fetchUserData, 30000);
+
+// Setup social share buttons with current URL
+window.addEventListener('DOMContentLoaded', () => {
+    const currentUrl = encodeURIComponent(window.location.href);
+    const shareText = encodeURIComponent('Check out this amazing video mining webapp! Earn rewards and upgrade your mining power!');
+    
+    const facebookShare = document.getElementById('facebookShare');
+    const twitterShare = document.getElementById('twitterShare');
+    
+    if (facebookShare) {
+        facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${currentUrl}`;
+    }
+    
+    if (twitterShare) {
+        twitterShare.href = `https://twitter.com/intent/tweet?text=${shareText}&url=${currentUrl}`;
+    }
+});

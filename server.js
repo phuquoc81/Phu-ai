@@ -12,6 +12,11 @@ app.use(express.static('public'));
 // In-memory storage for user data (in production, use a database)
 const users = new Map();
 
+// Validate userId input
+function isValidUserId(userId) {
+    return userId && typeof userId === 'string' && userId.length > 0 && userId.length < 100 && /^[a-zA-Z0-9_-]+$/.test(userId);
+}
+
 // Initialize or get user data
 function getUserData(userId) {
   if (!users.has(userId)) {
@@ -32,6 +37,11 @@ app.get('/', (req, res) => {
 
 app.post('/api/mine', (req, res) => {
   const { userId } = req.body;
+  
+  if (!isValidUserId(userId)) {
+    return res.status(400).json({ success: false, message: 'Invalid user ID' });
+  }
+  
   const userData = getUserData(userId);
   
   // Mining reward: $0.000001 per action * mining power
@@ -50,6 +60,11 @@ app.post('/api/mine', (req, res) => {
 
 app.post('/api/upgrade', (req, res) => {
   const { userId } = req.body;
+  
+  if (!isValidUserId(userId)) {
+    return res.status(400).json({ success: false, message: 'Invalid user ID' });
+  }
+  
   const userData = getUserData(userId);
   
   if (userData.balance >= userData.upgradeCost) {
@@ -74,7 +89,13 @@ app.post('/api/upgrade', (req, res) => {
 });
 
 app.get('/api/user/:userId', (req, res) => {
-  const userData = getUserData(req.params.userId);
+  const userId = req.params.userId;
+  
+  if (!isValidUserId(userId)) {
+    return res.status(400).json({ success: false, message: 'Invalid user ID' });
+  }
+  
+  const userData = getUserData(userId);
   res.json(userData);
 });
 
