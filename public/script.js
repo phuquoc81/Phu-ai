@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     amountInput.addEventListener('input', function(e) {
         const value = parseFloat(e.target.value) || 0;
+        // Validate non-negative values
+        if (value < 0) {
+            e.target.value = 0;
+            amountWordsElement.textContent = 'Zero dollars and 00/100';
+            return;
+        }
         const words = numberToWords(value);
         amountWordsElement.textContent = words;
     });
@@ -25,7 +31,8 @@ function numberToWords(num) {
     if (num === 0) return 'Zero dollars and 00/100';
     
     const dollars = Math.floor(num);
-    const cents = Math.round((num - dollars) * 100);
+    // Use more robust calculation to avoid floating-point precision errors
+    const cents = Math.round(num * 100) % 100;
     
     const dollarsInWords = convertToWords(dollars);
     const centsFormatted = cents.toString().padStart(2, '0');
