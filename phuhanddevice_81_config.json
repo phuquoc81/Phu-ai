@@ -1,0 +1,111 @@
+{
+  "device_info": {
+    "device_id": "phuhanddevice-81",
+    "device_name": "Phuhanddevice 81 - White Hole Storage Node",
+    "device_type": "gigatic_storage",
+    "firmware_version": "1.0.0",
+    "architecture": "white_hole_v1"
+  },
+  "storage_configuration": {
+    "storage_type": "white_hole",
+    "capacity": "infinite",
+    "storage_engine": "gigatic_white_hole",
+    "redundancy": "quantum_level",
+    "compression": "enabled",
+    "encryption": "enabled"
+  },
+  "vlan_configuration": {
+    "total_vlans": 1000000,
+    "vlan_range": {
+      "start": 1,
+      "end": 1000000
+    },
+    "default_vlans": [
+      {
+        "id": 1,
+        "name": "Management",
+        "description": "Management VLAN for device 81"
+      },
+      {
+        "id": 10,
+        "name": "Data",
+        "description": "Primary data VLAN"
+      },
+      {
+        "id": 100,
+        "name": "Voice",
+        "description": "Voice communication VLAN"
+      }
+    ],
+    "windows_16_vlans": {
+      "enabled": true,
+      "range": {
+        "start": 1000,
+        "end": 2000
+      },
+      "description": "VLANs optimized for Windows 16 compatibility"
+    }
+  },
+  "windows_16_support": {
+    "enabled": true,
+    "version": "16.0",
+    "compatibility_mode": "full",
+    "helper_services": [
+      "network_stack_v16",
+      "vlan_tagging_v16",
+      "storage_interface_v16",
+      "quantum_bridge_v16"
+    ],
+    "features": [
+      "advanced_vlan_management",
+      "high_speed_storage_access",
+      "quantum_entanglement_support",
+      "white_hole_integration"
+    ]
+  },
+  "performance": {
+    "max_throughput": "infinite_gbps",
+    "latency": "near_zero_ms",
+    "iops": "unlimited",
+    "concurrent_connections": 1000000
+  },
+  "management": {
+    "api_enabled": true,
+    "web_interface": true,
+    "cli_access": true,
+    "monitoring": {
+      "enabled": true,
+      "interval_seconds": 60,
+      "metrics": [
+        "storage_usage",
+        "vlan_status",
+        "throughput",
+        "error_rate"
+      ]
+    }
+  },
+  "network": {
+    "ipv4_enabled": true,
+    "ipv6_enabled": true,
+    "jumbo_frames": true,
+    "mtu": 9000,
+    "protocols": [
+      "802.1Q",
+      "802.1ad",
+      "VXLAN",
+      "NVGRE"
+    ]
+  },
+  "security": {
+    "access_control": "enabled",
+    "encryption_standard": "AES-256-GCM",
+    "authentication": "multi_factor",
+    "isolation": "vlan_level"
+  },
+  "metadata": {
+    "created_at": "2026-02-13T03:12:00Z",
+    "last_updated": "2026-02-13T03:12:00Z",
+    "configuration_version": "1.0.0",
+    "status": "active"
+  }
+}
