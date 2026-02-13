@@ -16,7 +16,8 @@
   "author": "phuquoc81",
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.5.1"
   },
   "engines": {
     "node": ">=20.x"
