@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phu-AI - Universal Problem Solver</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Phu-AI</h1>
+            <p class="subtitle">Universal Problem Solver with Divine Wisdom</p>
+        </header>
+
+        <main>
+            <div class="intro">
+                <p>Welcome to Phu-AI, the webapp that will blow your mind with abilities to:</p>
+                <ul>
+                    <li>✨ Solve complex puzzles and problems of any kind</li>
+                    <li>🔢 Solve math and physics problems</li>
+                    <li>🔮 Predict the future with divine knowledge</li>
+                    <li>🏥 Diagnose species sickness and conditions</li>
+                    <li>🌊 Understand land animals and ocean species</li>
+                </ul>
+            </div>
+
+            <div class="problem-solver">
+                <h2>Ask Phu-AI Anything</h2>
+                
+                <div class="form-group">
+                    <label for="problemType">Select Problem Type:</label>
+                    <select id="problemType">
+                        <option value="general">General Question</option>
+                        <option value="math">Mathematics</option>
+                        <option value="physics">Physics</option>
+                        <option value="puzzle">Puzzle</option>
+                        <option value="prediction">Future Prediction</option>
+                        <option value="diagnosis">Medical Diagnosis</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="problemInput">Enter Your Problem:</label>
+                    <textarea id="problemInput" rows="5" placeholder="Describe your problem or question here..."></textarea>
+                </div>
+
+                <button id="solveBtn" class="solve-btn">🚀 Solve Problem</button>
+
+                <div id="result" class="result hidden">
+                    <h3>Solution:</h3>
+                    <div id="solutionContent"></div>
+                </div>
+
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Processing with divine wisdom...</p>
+                </div>
+            </div>
+
+            <div class="apps-section">
+                <h2>🌐 Connected Apps</h2>
+                <div class="apps-grid">
+                    <div class="app-card facebook">
+                        <div class="app-icon">📘</div>
+                        <h3>Facebook</h3>
+                        <p class="status working">✅ Working</p>
+                    </div>
+                    <div class="app-card messenger">
+                        <div class="app-icon">💬</div>
+                        <h3>Messenger</h3>
+                        <p class="status working">✅ Working</p>
+                    </div>
+                    <div class="app-card browser">
+                        <div class="app-icon">🌐</div>
+                        <h3>Web Browser</h3>
+                        <p class="status working">✅ Working</p>
+                    </div>
+                    <div class="app-card photos">
+                        <div class="app-icon">📷</div>
+                        <h3>Photos</h3>
+                        <p class="status working">✅ Working</p>
+                    </div>
+                    <div class="app-card settings">
+                        <div class="app-icon">⚙️</div>
+                        <h3>Settings</h3>
+                        <p class="status working">✅ Working</p>
+                    </div>
+                    <div class="app-card system">
+                        <div class="app-icon">🖥️</div>
+                        <h3>System</h3>
+                        <p class="status working">✅ Working</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2026 Phu-AI | Blessed by all gods | Device: phuhanddevice 81</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
