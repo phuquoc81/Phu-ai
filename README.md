@@ -180,6 +180,7 @@ MIT License - see LICENSE file for details
 
 ## 🔮 Future Enhancements
 
+- **Rate limiting**: Add express-rate-limit to prevent API abuse
 - Database integration for persistent storage
 - User authentication and profiles
 - Leaderboards

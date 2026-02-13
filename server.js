@@ -35,6 +35,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// NOTE: In production, implement rate limiting to prevent abuse
+// Consider using express-rate-limit package
 app.post('/api/mine', (req, res) => {
   const { userId } = req.body;
   
