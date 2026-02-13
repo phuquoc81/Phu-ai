@@ -1,0 +1,16 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu ai webapp with abilities to solve complex puzzles and predict the future",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["ai", "webapp", "phu", "SuperGodAlien"],
+  "author": "phuquoc81",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
