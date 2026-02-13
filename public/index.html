@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legendary Swords Merge & BTC Mining</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen active">
+            <div class="auth-container">
+                <h1>⚔️ Legendary Swords & ₿ BTC Mining</h1>
+                <p class="tagline">Merge legendary swords, mine Bitcoin, complete tasks, earn real money!</p>
+                
+                <div class="auth-tabs">
+                    <button class="tab-btn active" onclick="showTab('login', event)">Login</button>
+                    <button class="tab-btn" onclick="showTab('register', event)">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <input type="text" id="login-username" placeholder="Username" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form" style="display: none;">
+                    <input type="text" id="register-username" placeholder="Username" required>
+                    <input type="email" id="register-email" placeholder="Email" required>
+                    <input type="password" id="register-password" placeholder="Password" required>
+                    <input type="text" id="affiliate-code" placeholder="Affiliate Code (optional)">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+
+                <div id="auth-message" class="message"></div>
+            </div>
+        </div>
+
+        <!-- Main Game Screen -->
+        <div id="game-screen" class="screen">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1>⚔️ Legendary Swords</h1>
+                </div>
+                <div class="header-center">
+                    <div class="balance-display">
+                        <div class="balance-item">
+                            <span class="balance-label">BTC:</span>
+                            <span id="btc-balance" class="balance-value">0.000000</span>
+                        </div>
+                        <div class="balance-item">
+                            <span class="balance-label">USD:</span>
+                            <span id="usd-balance" class="balance-value">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <span id="username-display"></span>
+                    <button class="btn btn-small" onclick="logout()">Logout</button>
+                </div>
+            </header>
+
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <button class="nav-btn active" onclick="switchTab('mining', event)">⛏️ Mining</button>
+                <button class="nav-btn" onclick="switchTab('swords', event)">⚔️ Swords</button>
+                <button class="nav-btn" onclick="switchTab('tasks', event)">📋 Tasks</button>
+                <button class="nav-btn" onclick="switchTab('affiliate', event)">🤝 Affiliate</button>
+                <button class="nav-btn" onclick="switchTab('withdraw', event)">💰 Withdraw</button>
+            </nav>
+
+            <!-- Mining Tab -->
+            <div id="mining-tab" class="tab-content active">
+                <div class="mining-container">
+                    <h2>Bitcoin Mining Game</h2>
+                    <p class="subtitle">Click to mine Bitcoin! Each click earns you 0.00001 BTC (simulated)</p>
+                    
+                    <div class="mining-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Clicks</div>
+                            <div id="total-clicks" class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Mined</div>
+                            <div id="total-mined" class="stat-value">0.000000 BTC</div>
+                        </div>
+                    </div>
+
+                    <div class="mining-button-container">
+                        <button id="mine-btn" class="mine-button" onclick="mine()">
+                            <span class="mine-icon">⛏️</span>
+                            <span>MINE BTC</span>
+                        </button>
+                    </div>
+
+                    <div id="mining-message" class="message"></div>
+                </div>
+            </div>
+
+            <!-- Swords Tab -->
+            <div id="swords-tab" class="tab-content">
+                <div class="swords-container">
+                    <h2>Your Legendary Swords</h2>
+                    <p class="subtitle">Merge swords of the same level to create more powerful weapons!</p>
+                    
+                    <div class="swords-actions">
+                        <button class="btn btn-primary" onclick="buySword()">Buy Sword (0.001 BTC)</button>
+                        <div class="merge-info">
+                            Drag and drop swords of the same level to merge them
+                        </div>
+                    </div>
+
+                    <div id="swords-grid" class="swords-grid"></div>
+                    <div id="swords-message" class="message"></div>
+                </div>
+            </div>
+
+            <!-- Tasks Tab -->
+            <div id="tasks-tab" class="tab-content">
+                <div class="tasks-container">
+                    <h2>Microtasks & Passive Income</h2>
+                    <p class="subtitle">Complete tasks to earn real money!</p>
+                    
+                    <div id="tasks-list" class="tasks-list"></div>
+                    <div id="tasks-message" class="message"></div>
+                </div>
+            </div>
+
+            <!-- Affiliate Tab -->
+            <div id="affiliate-tab" class="tab-content">
+                <div class="affiliate-container">
+                    <h2>Affiliate Marketing Program</h2>
+                    <p class="subtitle">Earn $1.00 for each friend you refer!</p>
+                    
+                    <div class="affiliate-code-section">
+                        <h3>Your Referral Code</h3>
+                        <div class="code-display">
+                            <input type="text" id="referral-code" readonly>
+                            <button class="btn btn-secondary" onclick="copyReferralCode()">Copy</button>
+                        </div>
+                        <p class="info-text">Share this code with friends. They get $0.50 signup bonus, you get $1.00!</p>
+                    </div>
+
+                    <div class="affiliate-stats">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Referrals</div>
+                            <div id="total-referrals" class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Total Earned</div>
+                            <div id="affiliate-earnings" class="stat-value">$0.00</div>
+                        </div>
+                    </div>
+
+                    <div id="affiliate-message" class="message"></div>
+                </div>
+            </div>
+
+            <!-- Withdraw Tab -->
+            <div id="withdraw-tab" class="tab-content">
+                <div class="withdraw-container">
+                    <h2>Withdraw Funds</h2>
+                    <p class="subtitle">Cash out your earnings via Stripe or TD Bank</p>
+                    
+                    <div class="withdraw-form">
+                        <h3>Request Withdrawal</h3>
+                        <form id="withdrawal-form">
+                            <div class="form-group">
+                                <label>Amount (USD)</label>
+                                <input type="number" id="withdraw-amount" min="10" step="0.01" placeholder="Minimum $10" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Payment Method</label>
+                                <select id="withdraw-method" required>
+                                    <option value="">Select method...</option>
+                                    <option value="stripe">Stripe (Credit/Debit Card)</option>
+                                    <option value="td-bank">TD Bank Transfer</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Request Withdrawal</button>
+                        </form>
+                    </div>
+
+                    <div class="withdrawals-history">
+                        <h3>Withdrawal History</h3>
+                        <div id="withdrawals-list" class="withdrawals-list"></div>
+                    </div>
+
+                    <div id="withdraw-message" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+</body>
+</html>
