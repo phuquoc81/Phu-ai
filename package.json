@@ -1,0 +1,16 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu AI Web Application with check generation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["ai", "check", "webapp"],
+  "author": "Phu Quoc Nguyen",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
