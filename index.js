@@ -1,4 +1,5 @@
 const express = require('express');
+const pkg = require('./package.json');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -9,7 +10,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({
     message: 'Welcome to Phu AI - The webapp that blows your mind!',
-    description: 'Abilities to solve complex puzzles and solve problems of any kind',
+    description: pkg.description,
     status: 'running'
   });
 });
