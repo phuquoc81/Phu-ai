@@ -1,0 +1,19 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu ai is the webapp that blows your mind all with abilities to solve complex puzzles and solve problems of any kind",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["ai", "webapp"],
+  "author": "Phu Quoc Nguyen",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.x"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
