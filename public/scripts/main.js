@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
         solveButton.textContent = 'Processing...';
 
         try {
-            // Simulate AI processing
+            // TODO: Replace with actual AI backend integration
+            // Simulate AI processing delay
             await new Promise(resolve => setTimeout(resolve, 1500));
 
             // Display result

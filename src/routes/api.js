@@ -20,6 +20,7 @@ router.post('/solve', (req, res) => {
     });
   }
 
+  // TODO: Integrate with actual AI service (OpenAI, Claude, or custom model)
   // Placeholder response - would integrate with actual AI service
   res.json({
     problem: problem,
