@@ -1,8 +1,9 @@
 const express = require('express');
 const path = require('path');
+const config = require('./config');
+const apiRoutes = require('./routes/api');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -14,13 +15,13 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Phu AI is running' });
-});
+// API routes
+app.use(config.apiPrefix, apiRoutes);
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Phu AI server is running on port ${PORT}`);
+app.listen(config.port, () => {
+  console.log(`Phu AI server is running on port ${config.port}`);
+  console.log(`Environment: ${config.nodeEnv}`);
 });
 
 module.exports = app;
