@@ -62,7 +62,7 @@ const server = http.createServer((req, res) => {
     <div class="container">
         <h1>🚀 Phutokenvercel</h1>
         <p>
-            Phu AI is the webapp that blow your mind with abilities to solve complex puzzles 
+            Phu AI is the webapp that blows your mind with abilities to solve complex puzzles 
             and solve problems of any kind including math, physics, and predict the future 
             with the knowledge of gods, aliens, and wisdom of the holy father.
         </p>
