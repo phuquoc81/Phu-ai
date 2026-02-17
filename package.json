@@ -1,0 +1,27 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu ai webapp with automatic login for Vercel",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": ["ai", "webapp", "vercel"],
+  "author": "phuquoc81",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "next": "^14.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "js-cookie": "^3.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.1.0"
+  }
+}
