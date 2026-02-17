@@ -1,6 +1,6 @@
 // Phutokenvercel API Login Endpoint with phuoptimizer 81
 module.exports = async (req, res) => {
-  // Enable CORS
+  // Enable CORS - In production, restrict to specific domains
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -17,7 +17,8 @@ module.exports = async (req, res) => {
       const { username, password, token } = req.body || {};
       
       // Phutokenvercel login logic with phuoptimizer 81
-      if (token && token.includes('phutokenvercel')) {
+      // Basic validation: token must start with 'phutokenvercel-' and have additional characters
+      if (token && token.startsWith('phutokenvercel-') && token.length > 15 && username && password) {
         res.status(200).json({
           success: true,
           message: 'Phutokenvercel login successful',
@@ -32,7 +33,7 @@ module.exports = async (req, res) => {
       } else {
         res.status(401).json({
           success: false,
-          message: 'Invalid Phutokenvercel token',
+          message: 'Invalid credentials or Phutokenvercel token. Token must start with "phutokenvercel-" and include additional characters.',
           phuoptimizer: phuoptimizer
         });
       }

@@ -59,6 +59,12 @@ The application will be available at `http://localhost:3000`
 
 ### Testing the API
 
+**Important Security Notes:**
+- This is a demonstration implementation. For production use, implement proper authentication with secure token generation, validation, and storage.
+- Use environment variables in Vercel Dashboard for sensitive values instead of committing them to the repository.
+- Consider restricting CORS to specific trusted domains in production.
+- Vercel enforces HTTPS by default, ensuring secure transmission of credentials.
+
 Using curl:
 ```bash
 # Get API information
@@ -73,7 +79,7 @@ curl -X POST https://your-project.vercel.app/api/phutokenvercel-login \
 Using the web interface:
 1. Open the deployed URL in your browser
 2. Enter your credentials
-3. Use a token containing "phutokenvercel" (e.g., "phutokenvercel-12345")
+3. Use a token in the format "phutokenvercel-xxxxx" (e.g., "phutokenvercel-12345")
 4. Click "Login with Phutokenvercel"
 
 ### What's Included
