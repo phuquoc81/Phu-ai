@@ -62,14 +62,16 @@ The codebase was scanned with CodeQL and no security alerts were found.
 ## Dependencies Security
 
 ### Known Issues
+- Next.js 14.2.35 has known DoS vulnerabilities related to React Server Components (requires 15.0.8+ for full fix)
+  - **Mitigation**: We use Pages Router, not App Router with Server Components, so we're not affected
 - Some development dependencies have known vulnerabilities (eslint-related, glob)
-- These do not affect runtime security as they're dev-only dependencies
-- Next.js vulnerabilities noted are related to features not used in this application (Image Optimizer)
+  - These do not affect runtime security as they're dev-only dependencies
 
 ### Recommendations
 - Regularly run `npm audit` to check for new vulnerabilities
 - Keep dependencies updated
 - Monitor GitHub security advisories
+- Consider upgrading to Next.js 15.x when stable for your use case
 
 ## Security Best Practices Followed
 
