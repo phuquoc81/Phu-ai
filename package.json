@@ -1,7 +1,7 @@
 {
   "name": "phu-ai",
   "version": "1.0.0",
-  "description": "Phu ai webapp with automatic login for Vercel",
+  "description": "Phu AI webapp with automatic login for Vercel",
   "main": "index.js",
   "scripts": {
     "dev": "next dev",

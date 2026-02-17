@@ -15,7 +15,7 @@ export default function Home() {
 
     // If auto-login failed, redirect to login page
     if (!autoLoginSuccess) {
-      router.push('/login');
+      router.replace('/login');
     }
   }, [router]);
 

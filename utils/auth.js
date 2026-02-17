@@ -9,7 +9,11 @@ export const AuthService = {
    */
   setToken(token) {
     if (token) {
-      Cookies.set(TOKEN_NAME, token, { expires: TOKEN_EXPIRY_DAYS });
+      Cookies.set(TOKEN_NAME, token, { 
+        expires: TOKEN_EXPIRY_DAYS,
+        secure: true,
+        sameSite: 'strict'
+      });
       return true;
     }
     return false;
