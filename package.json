@@ -1,0 +1,17 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu ai is the webapp that blow your mind with AI abilities to solve complex puzzles and problems",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["ai", "webapp", "problem-solving"],
+  "author": "phuquoc81",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
