@@ -40,4 +40,34 @@ npm start
 
 - `index.js` - Main application server
 - `package.json` - Project dependencies and scripts
-- `vercel.json` - Vercel deployment configuration 
+- `vercel.json` - Vercel deployment configuration
+- `api/` - Serverless API functions
+  - `api/hello.js` - Example API endpoint (accessible at `/api/hello`)
+
+### API Endpoints
+
+Once deployed on Vercel, you can access:
+- Main app: `https://your-deployment.vercel.app/`
+- API endpoint: `https://your-deployment.vercel.app/api/hello`
+
+### Vercel Setup
+
+To deploy this project to Vercel:
+
+1. **Option 1: Using Vercel CLI**
+   ```bash
+   npm i -g vercel
+   vercel
+   ```
+
+2. **Option 2: Using Vercel Dashboard**
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Vercel will automatically detect the configuration
+
+3. **Option 3: GitHub Actions (Automated)**
+   - Add the following secrets to your GitHub repository:
+     - `VERCEL_TOKEN` - Your Vercel authentication token
+     - `VERCEL_ORG_ID` - Your Vercel organization ID
+     - `VERCEL_PROJECT_ID` - Your Vercel project ID
+   - The workflow will automatically deploy on push to main branch 
