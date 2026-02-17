@@ -1,0 +1,14 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu ai is the webapp that blows your mind all with abilities to solve complex puzzles",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Build complete'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": ["ai", "phuoptimizer"],
+  "author": "phuquoc81",
+  "license": "ISC"
+}
