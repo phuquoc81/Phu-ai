@@ -1,0 +1,17 @@
+{
+  "name": "phutokenvercel",
+  "version": "1.0.0",
+  "description": "Phu ai webapp deployed to Vercel",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "build": "echo 'Build complete'"
+  },
+  "keywords": ["ai", "vercel", "webapp"],
+  "author": "Phuquoc81",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.x"
+  }
+}
