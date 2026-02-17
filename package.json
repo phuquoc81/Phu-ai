@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node src/index.js",
+    "build": "echo 'No build step required for this application'",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": ["ai", "webapp", "problem-solving"],
