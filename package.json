@@ -4,7 +4,7 @@
   "description": "Phu-ai web app with the Phutokenvercel API.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"No tests specified\""
+    "test": "node tests/phutokenvercel.test.js"
   },
   "repository": {
     "type": "git",
