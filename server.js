@@ -8,10 +8,53 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static('public'));
 
+// Input validation middleware
+function validateInput(prompt, maxLength = 5000) {
+  if (!prompt || typeof prompt !== 'string') {
+    throw new Error('Prompt is required and must be a string');
+  }
+  if (prompt.trim().length === 0) {
+    throw new Error('Prompt cannot be empty');
+  }
+  if (prompt.length > maxLength) {
+    throw new Error(`Prompt exceeds maximum length of ${maxLength} characters`);
+  }
+  return prompt.trim();
+}
+
+// Validate model selection
+function validateModel(model) {
+  const validModels = ['copilot', 'gpt5.2'];
+  if (!model || !validModels.includes(model)) {
+    throw new Error(`Invalid model. Must be one of: ${validModels.join(', ')}`);
+  }
+  return model;
+}
+
+// Helper function to create model response
+function createModelResponse(service, model, prompt, additionalData = {}) {
+  const baseResponse = {
+    success: true,
+    service,
+    model,
+    response: `${service === 'phu-ai' ? 'Phu AI' : 'Phubers.blog'} with ${model === 'copilot' ? 'Copilot' : 'GPT-5.2'}: ${prompt}`,
+    timestamp: new Date().toISOString(),
+    ...additionalData
+  };
+  
+  if (service === 'phu-ai') {
+    baseResponse.capabilities = ['solve complex puzzles', 'solve math problems', 'physics', 'predictions'];
+  } else if (service === 'phubers-blog') {
+    baseResponse.action = additionalData.action || 'generate';
+  }
+  
+  return baseResponse;
+}
+
 // Copilot endpoint
 app.post('/api/copilot', async (req, res) => {
   try {
-    const { prompt, context } = req.body;
+    const prompt = validateInput(req.body.prompt);
     
     // Copilot integration logic
     const response = {
@@ -23,7 +66,7 @@ app.post('/api/copilot', async (req, res) => {
     
     res.json(response);
   } catch (error) {
-    res.status(500).json({ 
+    res.status(400).json({ 
       success: false, 
       error: error.message 
     });
@@ -33,7 +76,7 @@ app.post('/api/copilot', async (req, res) => {
 // GPT-5.2 endpoint
 app.post('/api/gpt5.2', async (req, res) => {
   try {
-    const { prompt, context } = req.body;
+    const prompt = validateInput(req.body.prompt);
     
     // GPT-5.2 integration logic
     const response = {
@@ -45,7 +88,7 @@ app.post('/api/gpt5.2', async (req, res) => {
     
     res.json(response);
   } catch (error) {
-    res.status(500).json({ 
+    res.status(400).json({ 
       success: false, 
       error: error.message 
     });
@@ -55,37 +98,13 @@ app.post('/api/gpt5.2', async (req, res) => {
 // Phu AI endpoint
 app.post('/api/phu-ai', async (req, res) => {
   try {
-    const { prompt, model } = req.body;
+    const prompt = validateInput(req.body.prompt);
+    const model = validateModel(req.body.model);
     
-    let response;
-    if (model === 'copilot') {
-      response = {
-        success: true,
-        service: 'phu-ai',
-        model: 'copilot',
-        response: `Phu AI with Copilot: ${prompt}`,
-        capabilities: ['solve complex puzzles', 'solve math problems', 'physics', 'predictions'],
-        timestamp: new Date().toISOString()
-      };
-    } else if (model === 'gpt5.2') {
-      response = {
-        success: true,
-        service: 'phu-ai',
-        model: 'gpt5.2',
-        response: `Phu AI with GPT-5.2: ${prompt}`,
-        capabilities: ['solve complex puzzles', 'solve math problems', 'physics', 'predictions'],
-        timestamp: new Date().toISOString()
-      };
-    } else {
-      response = {
-        success: false,
-        error: 'Invalid model specified'
-      };
-    }
-    
+    const response = createModelResponse('phu-ai', model, prompt);
     res.json(response);
   } catch (error) {
-    res.status(500).json({ 
+    res.status(400).json({ 
       success: false, 
       error: error.message 
     });
@@ -95,37 +114,14 @@ app.post('/api/phu-ai', async (req, res) => {
 // Phubers.blog endpoint
 app.post('/api/phubers-blog', async (req, res) => {
   try {
-    const { prompt, model, action } = req.body;
+    const prompt = validateInput(req.body.prompt);
+    const model = validateModel(req.body.model);
+    const action = req.body.action || 'generate';
     
-    let response;
-    if (model === 'copilot') {
-      response = {
-        success: true,
-        service: 'phubers-blog',
-        model: 'copilot',
-        action: action || 'generate',
-        response: `Phubers.blog with Copilot: ${prompt}`,
-        timestamp: new Date().toISOString()
-      };
-    } else if (model === 'gpt5.2') {
-      response = {
-        success: true,
-        service: 'phubers-blog',
-        model: 'gpt5.2',
-        action: action || 'generate',
-        response: `Phubers.blog with GPT-5.2: ${prompt}`,
-        timestamp: new Date().toISOString()
-      };
-    } else {
-      response = {
-        success: false,
-        error: 'Invalid model specified'
-      };
-    }
-    
+    const response = createModelResponse('phubers-blog', model, prompt, { action });
     res.json(response);
   } catch (error) {
-    res.status(500).json({ 
+    res.status(400).json({ 
       success: false, 
       error: error.message 
     });
