@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phu AI - Copilot & GPT-5.2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .service-card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .model-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .model-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .model-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .model-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+            font-family: inherit;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .response {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .response.show {
+            display: block;
+        }
+        
+        .response h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .response-content {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .capabilities {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .capabilities ul {
+            list-style-position: inside;
+            color: #666;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            margin: 15px 0;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 Phu AI</h1>
+            <p class="subtitle">Powered by Copilot & GPT-5.2</p>
+        </header>
+        
+        <div class="services">
+            <!-- Phu AI Service -->
+            <div class="service-card">
+                <h2>💡 Phu AI</h2>
+                <p style="margin-bottom: 20px; color: #666;">
+                    Solve complex puzzles, math problems, physics, and predict the future with divine wisdom
+                </p>
+                
+                <div class="model-selector">
+                    <button class="model-btn active" data-service="phu-ai" data-model="copilot">
+                        Copilot
+                    </button>
+                    <button class="model-btn" data-service="phu-ai" data-model="gpt5.2">
+                        GPT-5.2
+                    </button>
+                </div>
+                
+                <textarea 
+                    id="phu-ai-input" 
+                    placeholder="Ask Phu AI anything... (e.g., solve complex math problems, predict outcomes, diagnose issues)"
+                ></textarea>
+                
+                <button class="submit-btn" onclick="submitQuery('phu-ai')">
+                    Submit to Phu AI
+                </button>
+                
+                <div class="loading" id="phu-ai-loading">Processing...</div>
+                
+                <div class="response" id="phu-ai-response">
+                    <h3>Response:</h3>
+                    <div class="response-content" id="phu-ai-content"></div>
+                </div>
+            </div>
+            
+            <!-- Phubers.blog Service -->
+            <div class="service-card">
+                <h2>📝 Phubers.blog</h2>
+                <p style="margin-bottom: 20px; color: #666;">
+                    Generate amazing blog content with AI assistance
+                </p>
+                
+                <div class="model-selector">
+                    <button class="model-btn active" data-service="phubers-blog" data-model="copilot">
+                        Copilot
+                    </button>
+                    <button class="model-btn" data-service="phubers-blog" data-model="gpt5.2">
+                        GPT-5.2
+                    </button>
+                </div>
+                
+                <textarea 
+                    id="phubers-blog-input" 
+                    placeholder="Enter your blog topic or idea..."
+                ></textarea>
+                
+                <button class="submit-btn" onclick="submitQuery('phubers-blog')">
+                    Generate Blog Content
+                </button>
+                
+                <div class="loading" id="phubers-blog-loading">Generating...</div>
+                
+                <div class="response" id="phubers-blog-response">
+                    <h3>Generated Content:</h3>
+                    <div class="response-content" id="phubers-blog-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let selectedModels = {
+            'phu-ai': 'copilot',
+            'phubers-blog': 'copilot'
+        };
+        
+        // Model selector functionality
+        document.querySelectorAll('.model-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const service = this.dataset.service;
+                const model = this.dataset.model;
+                
+                // Update active state
+                document.querySelectorAll(`[data-service="${service}"]`).forEach(b => {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Store selected model
+                selectedModels[service] = model;
+            });
+        });
+        
+        async function submitQuery(service) {
+            const input = document.getElementById(`${service}-input`);
+            const loading = document.getElementById(`${service}-loading`);
+            const response = document.getElementById(`${service}-response`);
+            const content = document.getElementById(`${service}-content`);
+            const prompt = input.value.trim();
+            
+            if (!prompt) {
+                alert('Please enter a prompt');
+                return;
+            }
+            
+            // Show loading, hide previous response
+            loading.classList.add('show');
+            response.classList.remove('show');
+            
+            try {
+                const res = await fetch(`/api/${service}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        prompt: prompt,
+                        model: selectedModels[service]
+                    })
+                });
+                
+                const data = await res.json();
+                
+                if (data.success) {
+                    let html = `
+                        <p><strong>Model:</strong> ${data.model}</p>
+                        <p><strong>Response:</strong></p>
+                        <p>${data.response}</p>
+                    `;
+                    
+                    if (data.capabilities) {
+                        html += `
+                            <div class="capabilities">
+                                <strong>Capabilities:</strong>
+                                <ul>
+                                    ${data.capabilities.map(cap => `<li>${cap}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                    
+                    content.innerHTML = html;
+                    response.classList.add('show');
+                } else {
+                    content.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                    response.classList.add('show');
+                }
+            } catch (error) {
+                content.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                response.classList.add('show');
+            } finally {
+                loading.classList.remove('show');
+            }
+        }
+        
+        // Allow Enter key to submit (with Shift+Enter for new line)
+        document.querySelectorAll('textarea').forEach(textarea => {
+            textarea.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const service = this.id.replace('-input', '');
+                    submitQuery(service);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
