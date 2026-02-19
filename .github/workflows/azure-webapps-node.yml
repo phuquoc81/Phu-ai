@@ -26,6 +26,8 @@ env:
   AZURE_WEBAPP_NAME: phuoptimizer 81  # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '20.x'                # set this to the node version to use
+  GPT_MODEL_VERSION: 'gpt5.2'         # GPT-5.2 integration for live advertising
+  COPILOT_VERSION: 'copilot8.1'       # Copilot 8.1 for future appsweb
 
 permissions:
   contents: read
