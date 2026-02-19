@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phu AI - Powered by phuoptimizer-81</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; color: white; margin-bottom: 40px; padding-top: 40px; }
+    h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    .subtitle { font-size: 1.2rem; opacity: 0.9; }
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+    .card h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+    .model-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+    .model-btn {
+      flex: 1; padding: 12px;
+      border: 2px solid #667eea; background: white; color: #667eea;
+      border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s;
+    }
+    .model-btn:hover, .model-btn.active { background: #667eea; color: white; }
+    textarea {
+      width: 100%; min-height: 100px; padding: 15px;
+      border: 2px solid #e0e0e0; border-radius: 8px;
+      font-size: 1rem; resize: vertical; margin-bottom: 15px; font-family: inherit;
+    }
+    textarea:focus { outline: none; border-color: #667eea; }
+    .submit-btn {
+      width: 100%; padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white; border: none; border-radius: 8px;
+      font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s;
+    }
+    .submit-btn:hover { transform: translateY(-2px); }
+    .submit-btn:active { transform: translateY(0); }
+    .response { margin-top: 20px; padding: 20px; background: #f5f5f5; border-radius: 8px; display: none; }
+    .response.show { display: block; }
+    .response h3 { color: #667eea; margin-bottom: 10px; }
+    .response-content { color: #333; line-height: 1.6; }
+    .loading { display: none; text-align: center; color: #667eea; font-weight: 600; margin: 15px 0; }
+    .loading.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧠 Phu AI</h1>
+      <p class="subtitle">AI that solves complex puzzles and predicts the future</p>
+      <span class="badge">Powered by phuoptimizer-81</span>
+    </header>
+
+    <div class="card">
+      <h2>💡 Ask Phu AI</h2>
+      <p style="margin-bottom:20px;color:#666;">
+        Solve complex puzzles, math problems, physics, and predict the future with divine wisdom.
+      </p>
+      <div class="model-selector">
+        <button class="model-btn active" data-model="copilot">Copilot</button>
+        <button class="model-btn" data-model="gpt5.2">GPT-5.2</button>
+      </div>
+      <textarea id="prompt-input" placeholder="Ask Phu AI anything… (e.g., solve math problems, predict outcomes)"></textarea>
+      <button class="submit-btn" onclick="submitQuery()">Submit to Phu AI</button>
+      <div class="loading" id="loading">Processing…</div>
+      <div class="response" id="response">
+        <h3>Response:</h3>
+        <div class="response-content" id="response-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedModel = 'copilot';
+
+    document.querySelectorAll('.model-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        selectedModel = this.dataset.model;
+      });
+    });
+
+    async function submitQuery() {
+      const input = document.getElementById('prompt-input');
+      const loading = document.getElementById('loading');
+      const responseEl = document.getElementById('response');
+      const content = document.getElementById('response-content');
+      const prompt = input.value.trim();
+
+      if (!prompt) { alert('Please enter a prompt'); return; }
+
+      loading.classList.add('show');
+      responseEl.classList.remove('show');
+
+      try {
+        const res = await fetch('/api/phu-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt, model: selectedModel })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          let html = `<p><strong>Model:</strong> ${data.model}</p><p><strong>Response:</strong></p><p>${data.response}</p>`;
+          if (data.capabilities) {
+            html += `<ul style="margin-top:10px;padding-left:20px;">${data.capabilities.map(c => `<li>${c}</li>`).join('')}</ul>`;
+          }
+          content.innerHTML = html;
+        } else {
+          content.innerHTML = `<p style="color:red;">Error: ${data.error}</p>`;
+        }
+        responseEl.classList.add('show');
+      } catch (err) {
+        content.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+        responseEl.classList.add('show');
+      } finally {
+        loading.classList.remove('show');
+      }
+    }
+
+    document.getElementById('prompt-input').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        submitQuery();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu AI webapp powered by phuoptimizer-81",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'No build step required'",
+    "test": "echo 'No tests specified' && exit 0"
+  },
+  "keywords": ["ai", "phuoptimizer"],
+  "author": "phuquoc81",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
