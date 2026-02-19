@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phu AI – Unlock Your Mind</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0d0d1a; color: #e0e0ff; }
+    header { text-align: center; padding: 60px 20px 30px; }
+    header h1 { font-size: 2.8rem; color: #a78bfa; }
+    header p { margin-top: 12px; font-size: 1.1rem; color: #c4b5fd; max-width: 600px; margin-inline: auto; }
+    .plans { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; padding: 40px 20px 60px; }
+    .card {
+      background: #1a1a2e; border: 1px solid #4c1d95; border-radius: 16px;
+      padding: 36px 28px; width: 280px; text-align: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(167,139,250,.25); }
+    .card h2 { font-size: 1.4rem; color: #a78bfa; margin-bottom: 8px; }
+    .card .price { font-size: 2.4rem; font-weight: 700; color: #fff; margin: 16px 0; }
+    .card .price span { font-size: 1rem; font-weight: 400; color: #9ca3af; }
+    .card ul { list-style: none; margin: 16px 0 28px; line-height: 2; color: #c4b5fd; font-size: .95rem; }
+    .btn {
+      display: inline-block; width: 100%; padding: 14px;
+      background: #7c3aed; color: #fff; border: none; border-radius: 8px;
+      font-size: 1rem; cursor: pointer; transition: background .2s;
+      text-decoration: none;
+    }
+    .btn:hover { background: #6d28d9; }
+    .badge { background: #7c3aed; color: #fff; border-radius: 99px; font-size: .75rem; padding: 2px 10px; margin-left: 8px; }
+    footer { text-align: center; padding: 20px; color: #6b7280; font-size: .85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Phu AI</h1>
+    <p>Solve complex puzzles, predict the future, diagnose species, and unlock the wisdom of the cosmos — all in one place.</p>
+  </header>
+
+  <section class="plans">
+    <!-- Basic plan -->
+    <div class="card">
+      <h2>Starter</h2>
+      <div class="price">$9<span>/mo</span></div>
+      <ul>
+        <li>100 AI queries / month</li>
+        <li>Math &amp; Physics solver</li>
+        <li>Email support</li>
+      </ul>
+    <button class="btn" id="btn-starter" onclick="subscribe('starter')">Get Started</button>
+    </div>
+
+    <!-- Pro plan -->
+    <div class="card">
+      <h2>Pro <span class="badge">Popular</span></h2>
+      <div class="price">$29<span>/mo</span></div>
+      <ul>
+        <li>Unlimited AI queries</li>
+        <li>Future prediction engine</li>
+        <li>Species diagnostics</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="btn" id="btn-pro" onclick="subscribe('pro')">Subscribe</button>
+    </div>
+
+    <!-- Enterprise plan -->
+    <div class="card">
+      <h2>Enterprise</h2>
+      <div class="price">$99<span>/mo</span></div>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>Dedicated AI instance</li>
+        <li>API access</li>
+        <li>24/7 support</li>
+      </ul>
+      <button class="btn" id="btn-enterprise" onclick="subscribe('enterprise')">Subscribe</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>Payments are processed securely by <strong>Stripe</strong>. Your card details never touch our servers.</p>
+  </footer>
+
+  <script>
+    let prices = {};
+
+    fetch('/config.json')
+      .then(r => r.json())
+      .then(cfg => { prices = cfg.prices; });
+
+    function showError(message) {
+      let banner = document.getElementById('error-banner');
+      if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'error-banner';
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#7f1d1d;color:#fca5a5;padding:14px;text-align:center;font-size:.95rem;z-index:999';
+        document.body.prepend(banner);
+      }
+      banner.textContent = message;
+      banner.style.display = 'block';
+    }
+
+    async function subscribe(plan) {
+      const priceId = prices[plan];
+      if (!priceId) {
+        showError('This plan is not available right now. Please try again later.');
+        return;
+      }
+      try {
+        const res = await fetch('/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ priceId })
+        });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          showError('Error: ' + (data.error || 'Unknown error'));
+        }
+      } catch (err) {
+        showError('Network error. Please try again.');
+      }
+    }
+  </script>
+</body>
+</html>
