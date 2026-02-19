@@ -1,0 +1,17 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu AI webapp with Stripe payments",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "stripe": "^20.3.1"
+  },
+  "engines": {
+    "node": ">=20.x"
+  }
+}
