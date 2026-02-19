@@ -1,0 +1,27 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu AI webapp with Copilot & GPT-5.2 capabilities",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'No build step required'",
+    "test": "echo 'No tests specified' && exit 0"
+  },
+  "keywords": [
+    "ai",
+    "copilot",
+    "gpt5.2",
+    "phubers"
+  ],
+  "author": "phuquoc81",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
