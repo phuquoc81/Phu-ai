@@ -1,0 +1,15 @@
+{
+  "name": "phu-ai",
+  "version": "18.18.24.81",
+  "description": "Phu ai - phuoptimizer 81 webapp",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "phu-ai",
+    "phuoptimizer"
+  ],
+  "author": "phuquoc81",
+  "license": "MIT"
+}
