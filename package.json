@@ -1,0 +1,16 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu AI webapp - an intelligent assistant with abilities to solve complex puzzles and problems",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["ai", "assistant", "phu-ai"],
+  "author": "phuquoc81",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
