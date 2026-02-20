@@ -1,0 +1,13 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu AI - a webapp with abilities to solve complex problems, math, physics, and predict the future.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"No tests defined\" && exit 0"
+  },
+  "keywords": ["phu-ai", "phuoptimizer", "phubers", "ai"],
+  "author": "phuquoc81",
+  "license": "MIT"
+}
