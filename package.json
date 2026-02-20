@@ -1,0 +1,21 @@
+{
+  "name": "phu-ai",
+  "version": "1.0.0",
+  "description": "Phu-ai web app with the Phutokenvercel API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests/phutokenvercel.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuquoc81/Phu-ai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/phuquoc81/Phu-ai/issues"
+  },
+  "homepage": "https://github.com/phuquoc81/Phu-ai#readme"
+}
