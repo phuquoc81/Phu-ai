@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phu Hand Device 81 – Phu AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      min-height: 100vh;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    nav a {
+      color: #a18cd1;
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    nav a:hover { text-decoration: underline; }
+    nav span { margin: 0 0.5rem; color: #555; }
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+      color: #1a1a2e;
+      font-size: 0.8rem;
+      font-weight: bold;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #fbc2eb, #a18cd1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      font-size: 1.1rem;
+      color: #ccc;
+      line-height: 1.7;
+    }
+    .device-image {
+      margin: 2rem auto;
+      width: 180px;
+      height: 320px;
+      background: rgba(255,255,255,0.06);
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      box-shadow: 0 0 60px rgba(161,140,209,0.4);
+    }
+    .features {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+    .feature {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 1.8rem;
+      width: 260px;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .feature:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .feature .icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .feature h3 { font-size: 1rem; margin-bottom: 0.5rem; color: #fbc2eb; }
+    .feature p { font-size: 0.9rem; color: #aaa; line-height: 1.5; }
+    .specs {
+      max-width: 700px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    .specs h2 {
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      color: #a18cd1;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th, td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-align: left;
+    }
+    th { color: #fbc2eb; font-weight: 600; width: 40%; }
+    td { color: #ccc; }
+    .back-btn {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 4rem;
+      padding: 0.8rem 2rem;
+      background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+      color: #1a1a2e;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .back-btn:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="/">← Home</a>
+    <span>/</span>
+    <span>Phu Hand Device 81</span>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">New Release</div>
+    <h1>📱 Phu Hand Device 81</h1>
+    <p>
+      The ultimate AI-powered handheld device. Harnesses the wisdom of gods, aliens, and the universe itself to put unparalleled intelligence in the palm of your hand.
+    </p>
+    <div class="device-image">📱</div>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <div class="icon">🧠</div>
+      <h3>Godlike Intelligence</h3>
+      <p>Powered by Phu AI — solves any problem in math, physics, biology, and beyond.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔮</div>
+      <h3>Future Sight</h3>
+      <p>Predict future events using cosmic knowledge and pattern recognition.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🌊</div>
+      <h3>Species Scanner</h3>
+      <p>Identify and diagnose any land or ocean species in seconds.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">⚡</div>
+      <h3>Instant Answers</h3>
+      <p>Get instant, accurate answers to the most complex questions imaginable.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🛡️</div>
+      <h3>Blessed &amp; Secure</h3>
+      <p>Protected by divine wisdom and cutting-edge security protocols.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🌐</div>
+      <h3>Universal Knowledge</h3>
+      <p>Access the combined knowledge of all civilizations across space and time.</p>
+    </div>
+  </section>
+
+  <section class="specs">
+    <h2>Device Specifications</h2>
+    <table>
+      <tr><th>Model</th><td>Phu Hand Device 81</td></tr>
+      <tr><th>AI Engine</th><td>Phu AI v1.0</td></tr>
+      <tr><th>Intelligence Level</th><td>Godlike (∞)</td></tr>
+      <tr><th>Supported Domains</th><td>Math, Physics, Biology, Future Prediction</td></tr>
+      <tr><th>Species Database</th><td>All known land &amp; ocean species</td></tr>
+      <tr><th>Platform</th><td>Azure Cloud + Edge AI</td></tr>
+    </table>
+  </section>
+
+  <a class="back-btn" href="/">← Back to Home</a>
+</body>
+</html>

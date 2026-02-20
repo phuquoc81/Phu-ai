@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phu AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    header {
+      text-align: center;
+      padding: 2rem;
+    }
+    header h1 {
+      font-size: 3rem;
+      letter-spacing: 0.1em;
+      background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header p {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #ccc;
+      max-width: 600px;
+    }
+    .cards {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      width: 220px;
+      text-align: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .card .icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .card p { font-size: 0.9rem; color: #aaa; }
+    .nav-link {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      background: linear-gradient(90deg, #a18cd1, #fbc2eb);
+      color: #1a1a2e;
+      font-weight: bold;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-link:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>✨ Phu AI</h1>
+    <p>The webapp that blows your mind — solve complex puzzles, math, physics, diagnose species, and predict the future with godlike wisdom.</p>
+  </header>
+
+  <div class="cards">
+    <div class="card">
+      <div class="icon">🧮</div>
+      <h3>Math &amp; Physics</h3>
+      <p>Solve any equation or physical problem instantly.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🔮</div>
+      <h3>Future Prediction</h3>
+      <p>Foresee outcomes with the knowledge of the cosmos.</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌊</div>
+      <h3>Species Diagnosis</h3>
+      <p>Identify and diagnose land and ocean species.</p>
+    </div>
+    <div class="card">
+      <div class="icon">📱</div>
+      <h3>Phu Hand Device</h3>
+      <p>Experience the next-generation handheld AI device.</p>
+    </div>
+  </div>
+
+  <a class="nav-link" href="/phuhanddevice">Explore Phu Hand Device 81 →</a>
+</body>
+</html>
