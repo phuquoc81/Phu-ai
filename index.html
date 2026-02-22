@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop-Anglo | Luxury Jewelry Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #1a1a1a;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            color: #d4af37;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #d4af37;
+        }
+
+        /* Hero Section */
+        #home {
+            background: linear-gradient(135deg, #1a1a1a 0%, #4a3728 100%);
+            color: #fff;
+            text-align: center;
+            padding: 120px 40px;
+        }
+
+        #home h1 {
+            font-size: 3rem;
+            letter-spacing: 3px;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+
+        #home p {
+            font-size: 1.2rem;
+            color: #ccc;
+            letter-spacing: 1px;
+        }
+
+        /* Products Section */
+        #products {
+            padding: 80px 40px;
+            background-color: #f9f9f9;
+        }
+
+        #products h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+            color: #1a1a1a;
+            letter-spacing: 2px;
+        }
+
+        .product-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .product-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            width: 280px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product-card h3 {
+            margin: 16px 0 8px;
+            font-size: 1.2rem;
+            color: #1a1a1a;
+        }
+
+        .product-card p {
+            color: #d4af37;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .product-card .btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 24px;
+            background-color: #1a1a1a;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .product-card .btn:hover {
+            background-color: #d4af37;
+        }
+
+        /* Contact Section */
+        #contact {
+            padding: 80px 40px;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
+        }
+
+        #contact h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #d4af37;
+            letter-spacing: 2px;
+        }
+
+        #contact p {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #ccc;
+        }
+
+        #contact p strong {
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #111;
+            color: #888;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Shop-Anglo</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#products">Shop</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <h1>Shine With Elegance 💎</h1>
+        <p>Luxury Jewelry Collection</p>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products">
+        <h2>Featured Jewelry</h2>
+        <div class="product-grid">
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1" alt="Gold Necklace">
+                <h3>Gold Necklace</h3>
+                <p>$299.99</p>
+                <button class="btn" type="button">Buy Now</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d" alt="Diamond Ring">
+                <h3>Diamond Ring</h3>
+                <p>$499.99</p>
+                <button class="btn" type="button">Buy Now</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f" alt="Luxury Bracelet">
+                <h3>Luxury Bracelet</h3>
+                <p>$199.99</p>
+                <button class="btn" type="button">Buy Now</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <address>
+            <p><strong>Email:</strong> <a href="mailto:laviscoexpress@gmail.com" style="color:#d4af37;">laviscoexpress@gmail.com</a></p>
+            <p><strong>Phone:</strong> <a href="tel:+16096653538" style="color:#d4af37;">+1 609 665 3538</a></p>
+            <p><strong>Address:</strong> 1114 Birdsall St, Houston, TX 77007</p>
+        </address>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Shop-Anglo | All Rights Reserved</p>
+    </footer>
+
+</body>
+</html>
