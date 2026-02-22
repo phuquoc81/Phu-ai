@@ -1,0 +1,9 @@
+# Security contact information for Phu-ai
+# See https://securitytxt.org/ for the specification
+
+Contact: https://github.com/phuquoc81/Phu-ai/security/advisories/new
+Preferred-Languages: en, vi
+Canonical: https://github.com/phuquoc81/Phu-ai/blob/main/.well-known/security.txt
+Policy: https://github.com/phuquoc81/Phu-ai/blob/main/SECURITY.md
+Acknowledgments: https://github.com/phuquoc81/Phu-ai/blob/main/SECURITY.md#safe-harbor
+Expires: 2027-02-22T00:00:00.000Z
