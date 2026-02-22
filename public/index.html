@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Anglo – Certified Fine Jewellery</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Georgia, serif; background: #faf7f2; color: #2c2c2c; }
+    header { background: #1a1a2e; color: #d4af37; padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    header h1 { font-size: 1.8rem; letter-spacing: 2px; }
+    nav a { color: #d4af37; text-decoration: none; margin-left: 1.5rem; font-size: 0.95rem; }
+    nav a:hover { text-decoration: underline; }
+    .hero { background: linear-gradient(135deg, #1a1a2e 60%, #d4af37 100%); color: #fff; text-align: center; padding: 5rem 2rem; }
+    .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.15rem; max-width: 600px; margin: 0 auto 2rem; }
+    .btn { display: inline-block; background: #d4af37; color: #1a1a2e; padding: 0.75rem 2rem; border-radius: 4px; font-weight: bold; text-decoration: none; }
+    .section { padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section h2 { font-size: 1.8rem; color: #1a1a2e; margin-bottom: 1.5rem; border-bottom: 2px solid #d4af37; padding-bottom: 0.5rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+    .card { background: #fff; border: 1px solid #e0d8c8; border-radius: 8px; padding: 1.5rem; text-align: center; }
+    .card .badge { font-size: 2.5rem; }
+    .card h3 { margin: 0.75rem 0 0.5rem; color: #1a1a2e; }
+    .card p { font-size: 0.9rem; color: #666; }
+    .trust-bar { background: #1a1a2e; color: #d4af37; text-align: center; padding: 1.5rem 2rem; }
+    .trust-bar ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+    .trust-bar li::before { content: "✓ "; font-weight: bold; }
+    footer { background: #111; color: #999; text-align: center; padding: 1.5rem; font-size: 0.85rem; }
+    footer a { color: #d4af37; text-decoration: none; margin: 0 0.5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Shop Anglo</h1>
+    <nav>
+      <a href="certificates.html">Certifications</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="license.html">License</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Certified Fine Jewellery</h2>
+    <p>Every piece at Shop Anglo is authenticated, hallmarked, and backed by independent gemological certification.</p>
+    <a class="btn" href="certificates.html">View Certifications</a>
+  </section>
+
+  <section class="section">
+    <h2>Our Security Promise</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="badge">🔒</div>
+        <h3>SSL / TLS Encrypted</h3>
+        <p>All transactions are protected by TLS 1.2+ encryption. HTTP traffic is automatically upgraded to HTTPS.</p>
+      </div>
+      <div class="card">
+        <div class="badge">🛡️</div>
+        <h3>Security Headers</h3>
+        <p>Strict CSP, HSTS, X-Frame-Options and other headers are enforced on every response.</p>
+      </div>
+      <div class="card">
+        <div class="badge">🏅</div>
+        <h3>Gem Certified</h3>
+        <p>Every diamond and gemstone carries a GIA or AGS laboratory certificate with full grading details.</p>
+      </div>
+      <div class="card">
+        <div class="badge">⚖️</div>
+        <h3>Licensed &amp; Compliant</h3>
+        <p>Shop Anglo holds all required retail jewellery trade licences and complies with GDPR and PCI-DSS.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-bar">
+    <ul>
+      <li>GIA Certified Stones</li>
+      <li>Hallmarked Gold &amp; Silver</li>
+      <li>GDPR Compliant</li>
+      <li>PCI-DSS Secure Payments</li>
+      <li>Authenticity Guarantee</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p>
+      &copy; 2026 Shop Anglo. All rights reserved. &nbsp;|&nbsp;
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Conditions</a>
+      <a href="certificates.html">Certifications</a>
+      <a href="license.html">License</a>
+    </p>
+  </footer>
+</body>
+</html>
