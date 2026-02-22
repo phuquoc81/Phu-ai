@@ -2,10 +2,21 @@
 
 const express = require('express');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Rate limiting – 200 requests per 15 minutes per IP
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 200,
+    standardHeaders: true,
+    legacyHeaders: false,
+  })
+);
 
 // Security headers via Helmet
 app.use(
