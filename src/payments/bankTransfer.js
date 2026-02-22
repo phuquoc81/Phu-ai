@@ -53,7 +53,7 @@ router.post(
       const url = new URL('/transfers', bankApiUrl);
       const body = JSON.stringify({
         amount,
-        currency: currency.toUpperCase(),
+        currency,
         gameId,
         recipientName: accountName,
         recipientAccount: accountNumber,
