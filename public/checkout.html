@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout – Shop-Anglo</title>
+  <script src="https://js.stripe.com/v3/" defer></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #f5f7fa; color: #1a1a2e; }
+    header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #fff;
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header h1 { font-size: 1.4rem; }
+    header a { color: #e94560; font-size: .9rem; margin-left: auto; text-decoration: none; }
+    header a:hover { text-decoration: underline; }
+    main { max-width: 520px; margin: 2rem auto; padding: 0 1rem; }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,.1);
+    }
+    h2 { font-size: 1.2rem; margin-bottom: 1.5rem; color: #0f3460; }
+    .product-summary {
+      background: #f0f4ff;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .product-summary .emoji { font-size: 2.5rem; }
+    .product-summary h3 { font-size: 1rem; }
+    .product-summary .price { font-size: 1.2rem; font-weight: 700; color: #0f3460; }
+    label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: .4rem; color: #333; }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: .65rem .8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: .95rem;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border-color .15s;
+    }
+    input[type="text"]:focus, input[type="email"]:focus { border-color: #0f3460; }
+    .stripe-element {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: .7rem .8rem;
+      margin-bottom: 1rem;
+      background: #fff;
+    }
+    .stripe-element.focused { border-color: #0f3460; }
+    .payment-method-tabs { display: flex; gap: .5rem; margin-bottom: 1.2rem; }
+    .tab-btn {
+      flex: 1;
+      padding: .55rem;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: all .15s;
+    }
+    .tab-btn.active { border-color: #0f3460; color: #0f3460; background: #f0f4ff; }
+    .method-section { display: none; }
+    .method-section.visible { display: block; }
+    .submit-btn {
+      width: 100%;
+      padding: .8rem;
+      background: #0f3460;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity .15s;
+      margin-top: .5rem;
+    }
+    .submit-btn:disabled { opacity: .6; cursor: not-allowed; }
+    .submit-btn:hover:not(:disabled) { opacity: .88; }
+    #error-msg {
+      color: #e94560;
+      font-size: .85rem;
+      margin-top: .8rem;
+      min-height: 1.2em;
+    }
+    .secure-badge {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-top: 1.2rem;
+      font-size: .75rem;
+      color: #888;
+    }
+    .secure-badge img { height: 22px; }
+    .accepted-cards { display: flex; gap: .4rem; align-items: center; font-size: .75rem; color: #888; margin-top: .8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🛍️ Shop-Anglo &rsaquo; Checkout</h1>
+    <a href="/">← Back to shop</a>
+  </header>
+
+  <main>
+    <div class="card">
+      <div id="product-summary" class="product-summary">Loading…</div>
+
+      <h2>Payment Details</h2>
+
+      <label for="cust-name">Full name</label>
+      <input type="text" id="cust-name" placeholder="Jane Smith" autocomplete="name" maxlength="120" required />
+
+      <label for="cust-email">Email address</label>
+      <input type="email" id="cust-email" placeholder="jane@example.com" autocomplete="email" maxlength="254" required />
+
+      <div class="payment-method-tabs">
+        <button class="tab-btn active" data-method="card">💳 Card</button>
+        <button class="tab-btn" data-method="acss_debit">🏦 Bank / e-Transfer</button>
+      </div>
+
+      <!-- Card payment section -->
+      <div class="method-section visible" id="section-card">
+        <label>Card number (Visa / Mastercard)</label>
+        <div id="card-element" class="stripe-element"></div>
+        <div class="accepted-cards">Accepted: 💳 Visa &nbsp;💳 Mastercard &nbsp;💳 Amex</div>
+      </div>
+
+      <!-- ACSS / e-Transfer section -->
+      <div class="method-section" id="section-acss_debit">
+        <p style="font-size:.85rem;color:#555;margin-bottom:.8rem;line-height:1.5;">
+          You will be redirected to verify your Canadian bank account via
+          <strong>Interac e-Transfer / pre-authorised debit (ACSS)</strong>.
+          A mandate will be created to authorise this payment.
+        </p>
+      </div>
+
+      <button class="submit-btn" id="pay-btn" disabled>Pay now</button>
+      <div id="error-msg" role="alert" aria-live="polite"></div>
+
+      <div class="secure-badge">
+        🔒 Payments secured by <strong style="margin-left:.3rem">Stripe</strong>.
+        Your card data never touches our servers.
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/checkout.js"></script>
+</body>
+</html>
