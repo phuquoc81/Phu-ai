@@ -1,0 +1,14 @@
+# CODEOWNERS
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Each line is a file pattern followed by one or more owners.
+# The last matching pattern takes precedence.
+# Order: most specific patterns last.
+
+# Repository owner has review rights on everything by default
+*                           @phuquoc81
+
+# Security-sensitive files require explicit owner review
+SECURITY.md                 @phuquoc81
+.github/dependabot.yml      @phuquoc81
+.github/workflows/          @phuquoc81
