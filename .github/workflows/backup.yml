@@ -1,0 +1,63 @@
+# Phu AI – Automated backup & insurance workflow
+#
+# Runs a scheduled backup every 24 hours and on every push to main.
+# If a backup fails the workflow triggers a Stripe insurance payout to
+# the configured PAYOUT_EMAIL (default: anhvankiet81@gmail.com).
+#
+# Required GitHub Actions secrets:
+#   STRIPE_SECRET_KEY  – Stripe secret API key
+#
+# Optional secrets / variables (override defaults):
+#   PAYOUT_EMAIL       – Override default payout recipient email
+#   PAYOUT_AMOUNT      – Payout amount in smallest currency unit (default: 1000)
+#   PAYOUT_CURRENCY    – ISO 4217 currency code (default: usd)
+#   BACKUP_DEST        – Backup destination path (default: phuhanddevice81)
+
+name: Backup & Insurance
+
+on:
+  push:
+    branches: ["main"]
+  schedule:
+    # Runs at 00:00 UTC every day
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backup:
+    name: Backup to phuhanddevice81
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run backup & insurance check
+        env:
+          BACKUP_DEST: ${{ vars.BACKUP_DEST || 'phuhanddevice81' }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          PAYOUT_EMAIL: ${{ vars.PAYOUT_EMAIL || 'anhvankiet81@gmail.com' }}
+          PAYOUT_AMOUNT: ${{ vars.PAYOUT_AMOUNT || '1000' }}
+          PAYOUT_CURRENCY: ${{ vars.PAYOUT_CURRENCY || 'usd' }}
+        run: npm run backup
+
+      - name: Upload backup artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phu-ai-backup-${{ github.run_number }}
+          path: phuhanddevice81/
+          retention-days: 90
+          if-no-files-found: warn
