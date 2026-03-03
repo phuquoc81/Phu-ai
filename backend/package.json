@@ -23,6 +23,7 @@
     "morgan": "^1.10.0",
     "pino": "^9.1.0",
     "pino-pretty": "^11.0.0",
+    "express-rate-limit": "^7.3.1",
     "rate-limiter-flexible": "^5.0.3",
     "stripe": "^15.7.0"
   },

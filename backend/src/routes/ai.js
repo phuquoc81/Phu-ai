@@ -37,9 +37,12 @@ router.post(
       const user = await User.findById(req.user.id);
       await user.deductCredits(creditCost);
 
-      // ── Plug in your AI provider here ────────────────────────────────────
-      // Example: const completion = await openai.chat.completions.create({ ... });
+      // TODO: Replace placeholder with real AI provider integration.
+      // Example (OpenAI): const completion = await openai.chat.completions.create({
+      //   model: 'gpt-4o', messages: [{ role: 'user', content: prompt }]
+      // });
       // const result = completion.choices[0].message.content;
+      // See https://platform.openai.com/docs/api-reference/chat
       const result = `[AI response placeholder for: "${prompt.slice(0, 50)}"]`;
       const durationMs = Date.now() - startMs;
 

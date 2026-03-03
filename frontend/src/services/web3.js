@@ -5,6 +5,9 @@
  */
 
 const CONTRACT_ADDRESS = process.env.REACT_APP_WEB3_CONTRACT_ADDRESS;
+if (!CONTRACT_ADDRESS) {
+  console.warn('REACT_APP_WEB3_CONTRACT_ADDRESS is not set — Web3 token features will be unavailable.');
+}
 
 // Minimal ERC-20 ABI — only what we need
 const ERC20_ABI = [

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const SALT_ROUNDS = 12;
+const DEFAULT_CREDITS = 100;
 
 const userSchema = new mongoose.Schema(
   {
@@ -51,7 +52,7 @@ const userSchema = new mongoose.Schema(
       default: 'free',
     },
     credits: {
-      total: { type: Number, default: 100 },
+      total: { type: Number, default: DEFAULT_CREDITS },
       used: { type: Number, default: 0 },
       resetAt: { type: Date, default: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) },
     },
