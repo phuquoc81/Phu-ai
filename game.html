@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phu's Time Travel Machine – Heaven Gateway</title>
+  <style>
+    /* ─── Reset & base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #050a1a;
+      color: #e0e8ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* ─── Stars background ─── */
+    #stars-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── Game wrapper ─── */
+    #game {
+      position: relative;
+      z-index: 1;
+      width: min(700px, 96vw);
+      margin: 24px auto 48px;
+    }
+
+    /* ─── Header ─── */
+    header {
+      text-align: center;
+      padding: 20px 0 10px;
+    }
+    header h1 {
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      background: linear-gradient(135deg, #a78bfa, #38bdf8, #f9a8d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
+      text-shadow: none;
+    }
+    header p {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: #7dd3fc;
+      opacity: 0.85;
+    }
+
+    /* ─── Progress bar ─── */
+    #progress-bar-wrap {
+      background: #0f1f3a;
+      border-radius: 99px;
+      height: 10px;
+      margin: 16px 0;
+      overflow: hidden;
+      border: 1px solid #1e3a5f;
+    }
+    #progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #818cf8, #38bdf8);
+      border-radius: 99px;
+      transition: width 0.6s ease;
+    }
+    #step-label {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      margin-bottom: 14px;
+    }
+
+    /* ─── Cards ─── */
+    .card {
+      background: rgba(15, 31, 60, 0.85);
+      border: 1px solid #1e3a5f;
+      border-radius: 18px;
+      padding: 28px 26px;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      color: #c4b5fd;
+      margin-bottom: 12px;
+    }
+    .card p, .card li {
+      font-size: 0.93rem;
+      line-height: 1.65;
+      color: #cbd5e1;
+    }
+    .card ul { padding-left: 20px; margin: 10px 0; }
+    .card li { margin-bottom: 6px; }
+
+    /* ─── Component grid ─── */
+    #component-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin: 18px 0;
+    }
+    .comp-btn {
+      background: #0d2040;
+      border: 2px solid #1e3a5f;
+      border-radius: 14px;
+      padding: 14px 8px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s;
+      color: #e2e8f0;
+      font-size: 0.82rem;
+    }
+    .comp-btn .icon { font-size: 2rem; display: block; margin-bottom: 6px; }
+    .comp-btn:hover:not(.collected) {
+      border-color: #60a5fa;
+      background: #142a50;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 18px rgba(96,165,250,0.3);
+    }
+    .comp-btn.collected {
+      border-color: #22c55e;
+      background: #0d2a1a;
+      opacity: 0.75;
+      cursor: default;
+    }
+    .comp-btn.collected::after {
+      content: " ✓";
+      color: #4ade80;
+    }
+
+    /* ─── Phuhanddevice panel ─── */
+    #device-panel {
+      text-align: center;
+      margin: 18px 0;
+    }
+    #device-visual {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 16px;
+      position: relative;
+      cursor: pointer;
+    }
+    #device-circle {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #3b82f6, #0f172a 70%);
+      border: 3px solid #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      box-shadow: 0 0 0 0 rgba(59,130,246,0.6);
+      transition: transform 0.15s, box-shadow 0.3s;
+      user-select: none;
+    }
+    #device-circle.pulse {
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0   rgba(59,130,246,0.7); }
+      70%  { box-shadow: 0 0 0 26px rgba(59,130,246,0);  }
+      100% { box-shadow: 0 0 0 0   rgba(59,130,246,0);   }
+    }
+    #device-circle:active { transform: scale(0.93); }
+
+    #charge-bar-wrap {
+      background: #0f1f3a;
+      border-radius: 99px;
+      height: 16px;
+      width: 200px;
+      margin: 0 auto 8px;
+      overflow: hidden;
+      border: 1px solid #1e3a5f;
+    }
+    #charge-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #7c3aed, #38bdf8, #f0abfc);
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+    #charge-label { color: #94a3b8; font-size: 0.82rem; }
+
+    /* ─── Gateway canvas ─── */
+    #gateway-wrap {
+      text-align: center;
+      margin: 16px 0;
+    }
+    #gateway-canvas {
+      border-radius: 16px;
+      border: 2px solid #312e81;
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    /* ─── Quiz ─── */
+    #quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .quiz-btn {
+      background: #0d2040;
+      border: 2px solid #1e3a5f;
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover { border-color: #60a5fa; background: #142a50; }
+    .quiz-btn.correct { border-color: #22c55e; background: #0d2a1a; color: #4ade80; }
+    .quiz-btn.wrong   { border-color: #ef4444; background: #2a0d0d; color: #fca5a5; }
+
+    #quiz-feedback {
+      min-height: 24px;
+      font-size: 0.88rem;
+      margin-top: 8px;
+      color: #fcd34d;
+    }
+
+    /* ─── Win screen ─── */
+    #win-screen {
+      text-align: center;
+    }
+    #win-screen .trophy { font-size: 5rem; animation: float 2s ease-in-out infinite; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+    #win-screen h2 {
+      font-size: 1.7rem;
+      background: linear-gradient(135deg, #f9a8d4, #a78bfa, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 16px 0 10px;
+    }
+
+    /* ─── Buttons ─── */
+    .btn-primary {
+      display: inline-block;
+      background: linear-gradient(135deg, #4f46e5, #0ea5e9);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: opacity 0.2s, transform 0.15s;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-primary:active { transform: scale(0.96); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    /* ─── Info badge ─── */
+    .info-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #1e3a5f;
+      border-radius: 99px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      color: #93c5fd;
+      margin-top: 10px;
+    }
+
+    /* ─── Fact box ─── */
+    .fact-box {
+      background: #0a1a33;
+      border-left: 4px solid #818cf8;
+      border-radius: 0 12px 12px 0;
+      padding: 12px 16px;
+      margin: 14px 0;
+      font-size: 0.87rem;
+      color: #bfdbfe;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="stars-canvas"></canvas>
+
+<div id="game">
+  <header>
+    <h1>🚀 Phu's Time Travel Machine</h1>
+    <p>Learn to build the machine, activate the Phuhanddevice&nbsp;81 &amp; open the Heaven Gateway!</p>
+  </header>
+
+  <div id="progress-bar-wrap"><div id="progress-bar" style="width:0%"></div></div>
+  <div id="step-label">Step 1 of 6</div>
+
+  <div id="scene-container" class="card"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════
+   STARS BACKGROUND
+═══════════════════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    stars = Array.from({ length: 160 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.4 + 0.3,
+      o: Math.random(),
+      s: Math.random() * 0.005 + 0.002
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      s.o += s.s;
+      if (s.o > 1 || s.o < 0) s.s *= -1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(200,220,255,${s.o})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+/* ═══════════════════════════════════════════════
+   GATEWAY CANVAS ANIMATION
+═══════════════════════════════════════════════ */
+let gatewayAnimFrame = null;
+let phuX = 0;   // character x on gateway canvas
+let gatewayPhase = 'closed'; // closed | opening | open | walking
+
+function drawGateway(canvas, phase, progress, charX) {
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+
+  // Dark sky
+  const sky = ctx.createLinearGradient(0, 0, 0, H);
+  sky.addColorStop(0, '#020617');
+  sky.addColorStop(1, '#0f172a');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H);
+
+  // Ground
+  ctx.fillStyle = '#1e293b';
+  ctx.fillRect(0, H - 40, W, 40);
+  ctx.fillStyle = '#334155';
+  ctx.fillRect(0, H - 42, W, 3);
+
+  // Gateway portal
+  const cx = W / 2, cy = H / 2 - 20;
+  const gw = 90 * progress, gh = 130 * progress;
+
+  if (progress > 0) {
+    // Glow
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, gw + 40);
+    glow.addColorStop(0,   'rgba(168,85,247,0.35)');
+    glow.addColorStop(0.5, 'rgba(56,189,248,0.15)');
+    glow.addColorStop(1,   'rgba(0,0,0,0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, gw + 50, gh + 50, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Portal interior
+    const interior = ctx.createRadialGradient(cx, cy - 10, 0, cx, cy, gw);
+    interior.addColorStop(0,   '#e0f2fe');
+    interior.addColorStop(0.3, '#a78bfa');
+    interior.addColorStop(0.7, '#7c3aed');
+    interior.addColorStop(1,   '#312e81');
+    ctx.fillStyle = interior;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, gw, gh, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Swirl lines inside portal
+    if (progress > 0.6) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, gw, gh, 0, 0, Math.PI * 2);
+      ctx.clip();
+      const t = Date.now() / 600;
+      for (let i = 0; i < 6; i++) {
+        const angle = t + (i / 6) * Math.PI * 2;
+        const x1 = cx + Math.cos(angle) * gw * 0.3;
+        const y1 = cy + Math.sin(angle) * gh * 0.3;
+        const x2 = cx + Math.cos(angle + Math.PI) * gw * 0.9;
+        const y2 = cy + Math.sin(angle + Math.PI) * gh * 0.9;
+        const lg = ctx.createLinearGradient(x1, y1, x2, y2);
+        lg.addColorStop(0, 'rgba(224,242,254,0.7)');
+        lg.addColorStop(1, 'rgba(124,58,237,0)');
+        ctx.strokeStyle = lg;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    // Portal border ring
+    ctx.strokeStyle = '#c4b5fd';
+    ctx.lineWidth = 4 * progress;
+    ctx.shadowColor = '#818cf8';
+    ctx.shadowBlur = 18;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, gw, gh, 0, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Label
+    if (progress > 0.8) {
+      ctx.fillStyle = `rgba(224,242,254,${(progress - 0.8) * 5})`;
+      ctx.font = 'bold 13px Segoe UI, Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('✦ HEAVEN GATEWAY ✦', cx, cy - gh - 14);
+    }
+  }
+
+  // Phu character (simple stick figure)
+  drawCharacter(ctx, charX, H - 40, phase === 'walking');
+
+  // Time machine device on left
+  drawDevice(ctx, 55, H - 80);
+}
+
+function drawCharacter(ctx, x, groundY, walking) {
+  const t = Date.now() / 200;
+  const legSwing = walking ? Math.sin(t) * 8 : 0;
+
+  ctx.strokeStyle = '#f8fafc';
+  ctx.fillStyle   = '#f8fafc';
+  ctx.lineWidth = 2.5;
+
+  // Head
+  ctx.beginPath();
+  ctx.arc(x, groundY - 48, 10, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Body
+  ctx.beginPath();
+  ctx.moveTo(x, groundY - 38);
+  ctx.lineTo(x, groundY - 18);
+  ctx.stroke();
+
+  // Arms
+  ctx.beginPath();
+  ctx.moveTo(x, groundY - 32);
+  ctx.lineTo(x - 12, groundY - 22);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, groundY - 32);
+  ctx.lineTo(x + 12, groundY - 22);
+  ctx.stroke();
+
+  // Legs
+  ctx.beginPath();
+  ctx.moveTo(x, groundY - 18);
+  ctx.lineTo(x - 8 + legSwing, groundY);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x, groundY - 18);
+  ctx.lineTo(x + 8 - legSwing, groundY);
+  ctx.stroke();
+
+  // "PHU" label
+  ctx.font = 'bold 10px Segoe UI, Arial';
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#93c5fd';
+  ctx.fillText('PHU', x, groundY - 62);
+}
+
+function drawDevice(ctx, x, groundY) {
+  ctx.save();
+  // Base
+  ctx.fillStyle = '#1e293b';
+  ctx.strokeStyle = '#38bdf8';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(x - 18, groundY - 30, 36, 50, 6);
+  ctx.fill();
+  ctx.stroke();
+
+  // Screen
+  ctx.fillStyle = '#0ea5e9';
+  ctx.globalAlpha = 0.7;
+  ctx.fillRect(x - 12, groundY - 24, 24, 18);
+  ctx.globalAlpha = 1;
+
+  // Buttons
+  [0, 1, 2].forEach(i => {
+    ctx.beginPath();
+    ctx.arc(x - 8 + i * 8, groundY + 8, 4, 0, Math.PI * 2);
+    ctx.fillStyle = ['#f472b6','#a78bfa','#38bdf8'][i];
+    ctx.fill();
+  });
+
+  // Label
+  ctx.font = '7px Segoe UI, Arial';
+  ctx.fillStyle = '#7dd3fc';
+  ctx.textAlign = 'center';
+  ctx.fillText('PHD-81', x, groundY + 22);
+  ctx.restore();
+}
+
+function startGatewayAnimation(canvas, onDone) {
+  let progress = 0;
+  const CHAR_START = 60;
+  const CHAR_END   = canvas.width / 2;
+
+  gatewayPhase = 'opening';
+  phuX = CHAR_START;
+
+  function loop() {
+    if (gatewayPhase === 'opening') {
+      progress = Math.min(progress + 0.008, 1);
+      if (progress >= 1) { gatewayPhase = 'open'; }
+    } else if (gatewayPhase === 'open') {
+      // pause briefly then start walking
+      gatewayPhase = 'walking';
+    } else if (gatewayPhase === 'walking') {
+      phuX += 1.2;
+      if (phuX >= CHAR_END) {
+        phuX = CHAR_END;
+        gatewayPhase = 'done';
+        drawGateway(canvas, gatewayPhase, progress, phuX);
+        if (onDone) onDone();
+        return;
+      }
+    }
+    drawGateway(canvas, gatewayPhase, progress, phuX);
+    gatewayAnimFrame = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+/* ═══════════════════════════════════════════════
+   GAME ENGINE
+═══════════════════════════════════════════════ */
+const TOTAL_STEPS = 6;
+
+// Quiz data
+const quizzes = [
+  {
+    q: 'What does the Phuhanddevice 81 primarily emit to open a gateway?',
+    options: [
+      'Sound waves',
+      'Quantum-resonance photons aligned with temporal ley lines',
+      'Radio signals',
+      'Infrared heat'
+    ],
+    correct: 1,
+    explanation: 'The Phuhanddevice 81 emits quantum-resonance photons that synchronise with cosmic ley lines, creating the resonance frequency needed to open the Heaven Gateway.'
+  },
+  {
+    q: "Which energy source powers the time travel machine's core?",
+    options: [
+      'Solar panels',
+      'Standard batteries',
+      'Zero-point crystalline energy harvested from the Phuhanddevice 81',
+      'Diesel engine'
+    ],
+    correct: 2,
+    explanation: 'The zero-point crystalline energy module inside the Phuhanddevice 81 harnesses vacuum energy, providing unlimited clean power for temporal displacement.'
+  },
+  {
+    q: 'What is the correct sequence to open the Heaven Gateway?',
+    options: [
+      'Walk → Activate device → Open gateway',
+      'Open gateway → Walk → Activate device',
+      'Activate device → Charge to 100% → Open gateway → Walk through',
+      'Open gateway → Charge device → Walk'
+    ],
+    correct: 2,
+    explanation: 'The device must be fully charged first so it generates a stable standing wave. Only then can the gateway be safely opened for human passage.'
+  }
+];
+
+let currentQuizIndex = 0;
+let collectedComponents = new Set();
+let deviceCharge = 0;
+let chargeInterval = null;
+
+const components = [
+  { id: 'crystal',   icon: '💎', name: 'Zero-Point Crystal'      },
+  { id: 'coil',      icon: '🌀', name: 'Temporal Coil'           },
+  { id: 'lens',      icon: '🔭', name: 'Quantum Lens'            },
+  { id: 'core',      icon: '⚛️',  name: 'Resonance Core'         },
+  { id: 'antenna',   icon: '📡', name: 'Heaven Antenna'          },
+  { id: 'phudevice', icon: '🖐️', name: 'Phuhanddevice 81'        }
+];
+
+function setProgress(step) {
+  const pct = ((step - 1) / TOTAL_STEPS) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('step-label').textContent = `Step ${step} of ${TOTAL_STEPS}`;
+}
+
+function render(step) {
+  setProgress(step);
+  const container = document.getElementById('scene-container');
+  if (gatewayAnimFrame) { cancelAnimationFrame(gatewayAnimFrame); gatewayAnimFrame = null; }
+
+  switch (step) {
+    case 1: renderIntro(container);        break;
+    case 2: renderComponents(container);   break;
+    case 3: renderQuiz(container, 0);      break;
+    case 4: renderQuiz(container, 1);      break;
+    case 5: renderDevice(container);       break;
+    case 6: renderGateway(container);      break;
+    case 7: renderWin(container);          break;
+  }
+}
+
+/* ── Step 1: Intro ── */
+function renderIntro(el) {
+  el.innerHTML = `
+    <h2>🌟 Welcome, Phu!</h2>
+    <p>You are about to embark on the most extraordinary journey in human history—learning to build a <strong>Time Travel Machine</strong> powered by the legendary <strong>Phuhanddevice 81</strong>.</p>
+
+    <div class="fact-box">
+      📖 <strong>Mission briefing:</strong> The Phuhanddevice 81 is a hand-held quantum emitter that can synchronise your body's bio-field with the cosmic Heaven Gateway. Once the gateway is open, your human body can safely walk through and transcend time itself.
+    </div>
+
+    <p>Your journey has <strong>6 steps</strong>:</p>
+    <ul>
+      <li>🔩 Collect all machine components</li>
+      <li>📚 Pass the knowledge quizzes</li>
+      <li>🖐️ Charge the Phuhanddevice 81</li>
+      <li>🌌 Open the Heaven Gateway</li>
+      <li>🚶 Walk through and travel through time!</li>
+    </ul>
+
+    <div style="text-align:center">
+      <button class="btn-primary" onclick="render(2)">Begin Mission 🚀</button>
+    </div>
+  `;
+}
+
+/* ── Step 2: Collect components ── */
+function renderComponents(el) {
+  el.innerHTML = `
+    <h2>🔩 Step 1 — Collect Machine Components</h2>
+    <p>The time travel machine needs <strong>6 key components</strong>. Tap each one to collect it!</p>
+    <div id="component-grid"></div>
+    <div style="text-align:center">
+      <button id="next-comp-btn" class="btn-primary" onclick="render(3)" disabled>Next: Knowledge Quiz →</button>
+    </div>
+  `;
+
+  const grid = document.getElementById('component-grid');
+  components.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'comp-btn' + (collectedComponents.has(c.id) ? ' collected' : '');
+    btn.innerHTML = `<span class="icon">${c.icon}</span>${c.name}`;
+    btn.dataset.id = c.id;
+    btn.addEventListener('click', () => {
+      if (collectedComponents.has(c.id)) return;
+      collectedComponents.add(c.id);
+      btn.classList.add('collected');
+      btn.disabled = true;
+      if (collectedComponents.size === components.length) {
+        document.getElementById('next-comp-btn').disabled = false;
+      }
+    });
+    grid.appendChild(btn);
+  });
+
+  if (collectedComponents.size === components.length) {
+    document.getElementById('next-comp-btn').disabled = false;
+  }
+}
+
+/* ── Steps 3–4: Quizzes ── */
+function renderQuiz(el, index) {
+  const quiz = quizzes[index];
+  const stepNum = index + 3;
+
+  el.innerHTML = `
+    <h2>📚 Step ${index + 2} — Knowledge Check ${index + 1}/${quizzes.length}</h2>
+    <p style="margin-bottom:14px">${quiz.q}</p>
+    <div id="quiz-options"></div>
+    <div id="quiz-feedback"></div>
+    <div style="text-align:center">
+      <button id="quiz-next" class="btn-primary" onclick="render(${stepNum + 1})" disabled>Continue →</button>
+    </div>
+  `;
+
+  const optContainer = document.getElementById('quiz-options');
+  quiz.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-btn';
+    btn.textContent = `${String.fromCharCode(65 + i)}) ${opt}`;
+    btn.addEventListener('click', () => {
+      // Disable all
+      optContainer.querySelectorAll('.quiz-btn').forEach(b => b.disabled = true);
+      if (i === quiz.correct) {
+        btn.classList.add('correct');
+        document.getElementById('quiz-feedback').innerHTML =
+          `✅ Correct! ${quiz.explanation}`;
+        document.getElementById('quiz-next').disabled = false;
+      } else {
+        btn.classList.add('wrong');
+        optContainer.querySelectorAll('.quiz-btn')[quiz.correct].classList.add('correct');
+        document.getElementById('quiz-feedback').innerHTML =
+          `❌ Not quite. ${quiz.explanation}`;
+        document.getElementById('quiz-next').disabled = false;
+      }
+    });
+    optContainer.appendChild(btn);
+  });
+}
+
+/* ── Step 5: Charge the Phuhanddevice 81 ── */
+function renderDevice(el) {
+  deviceCharge = 0;
+  el.innerHTML = `
+    <h2>🖐️ Step 4 — Charge the Phuhanddevice 81</h2>
+    <p>The <strong>Phuhanddevice 81</strong> needs to reach <strong>100% quantum charge</strong> before it can open the Heaven Gateway.</p>
+    <p style="margin-top:6px">Keep tapping the device to build up the charge!</p>
+
+    <div class="fact-box">
+      💡 <strong>How it works:</strong> Each tap sends a pulse of your own bio-energy into the zero-point crystal. When the crystal is fully saturated, it emits a standing quantum wave that resonates with the Heaven Gateway's frequency.
+    </div>
+
+    <div id="device-panel">
+      <div id="device-visual">
+        <div id="device-circle" class="pulse" onclick="tapDevice()">🖐️</div>
+      </div>
+      <div id="charge-bar-wrap"><div id="charge-bar"></div></div>
+      <div id="charge-label">Charge: 0%</div>
+    </div>
+
+    <div style="text-align:center">
+      <button id="gateway-btn" class="btn-primary" onclick="render(6)" disabled>Open Heaven Gateway 🌌</button>
+    </div>
+  `;
+}
+
+function tapDevice() {
+  if (deviceCharge >= 100) return;
+  deviceCharge = Math.min(100, deviceCharge + 5);
+  document.getElementById('charge-bar').style.width = deviceCharge + '%';
+  document.getElementById('charge-label').textContent = `Charge: ${deviceCharge}%`;
+
+  // Visual feedback
+  const circle = document.getElementById('device-circle');
+  circle.style.transform = 'scale(0.9)';
+  setTimeout(() => { if (circle) circle.style.transform = ''; }, 120);
+
+  if (deviceCharge >= 100) {
+    document.getElementById('charge-label').textContent = '⚡ Fully Charged! 100%';
+    document.getElementById('gateway-btn').disabled = false;
+    circle.classList.remove('pulse');
+    circle.textContent = '⚡';
+  }
+}
+
+/* ── Step 6: Heaven Gateway + walk-through ── */
+function renderGateway(el) {
+  el.innerHTML = `
+    <h2>🌌 Step 5 — Open the Heaven Gateway &amp; Walk Through!</h2>
+    <p>The Phuhanddevice 81 is fully charged. Watch as the Heaven Gateway opens… and Phu walks through!</p>
+
+    <div id="gateway-wrap">
+      <canvas id="gateway-canvas" width="560" height="320"></canvas>
+    </div>
+
+    <div id="gateway-status" style="text-align:center;color:#a78bfa;font-size:0.9rem;min-height:28px;margin-top:8px">
+      Initiating quantum resonance…
+    </div>
+
+    <div style="text-align:center">
+      <button id="complete-btn" class="btn-primary" onclick="render(7)" style="display:none">🏆 See Your Achievement →</button>
+    </div>
+  `;
+
+  const canvas = document.getElementById('gateway-canvas');
+  // Initial static draw
+  drawGateway(canvas, 'closed', 0, 60);
+
+  const statusMessages = [
+    'Initiating quantum resonance…',
+    'Heaven Gateway is opening…',
+    'Gateway fully open — Phu is walking through!',
+    '✨ Phu has entered the Heaven Gateway! Time travel initiated!'
+  ];
+  let msgIdx = 0;
+
+  function nextMsg() {
+    msgIdx = Math.min(msgIdx + 1, statusMessages.length - 1);
+    const s = document.getElementById('gateway-status');
+    if (s) s.textContent = statusMessages[msgIdx];
+  }
+
+  setTimeout(() => { nextMsg(); }, 600);
+  setTimeout(() => { nextMsg(); }, 2000);
+
+  setTimeout(() => {
+    startGatewayAnimation(canvas, () => {
+      nextMsg();
+      const btn = document.getElementById('complete-btn');
+      if (btn) btn.style.display = 'inline-block';
+    });
+  }, 800);
+}
+
+/* ── Step 7: Win screen ── */
+function renderWin(el) {
+  document.getElementById('step-label').textContent = '✅ Mission Complete!';
+
+  el.innerHTML = `
+    <div id="win-screen">
+      <div class="trophy">🏆</div>
+      <h2>Mission Accomplished, Phu!</h2>
+      <p>You have successfully:</p>
+      <ul style="text-align:left;max-width:360px;margin:14px auto;line-height:2">
+        <li>✅ Collected all 6 machine components</li>
+        <li>✅ Passed all knowledge checks</li>
+        <li>✅ Fully charged the Phuhanddevice 81</li>
+        <li>✅ Opened the Heaven Gateway</li>
+        <li>✅ Walked through with your human body</li>
+      </ul>
+
+      <div class="fact-box" style="max-width:480px;margin:16px auto;text-align:left">
+        🌟 <strong>Summary — How the Time Travel Machine works:</strong><br><br>
+        The <strong>Phuhanddevice 81</strong> collects bio-energy from your hand and stores it in a <em>zero-point crystal</em>.
+        When fully charged, it emits a <em>quantum-resonance field</em> that interacts with the <em>Heaven Antenna</em> and <em>Temporal Coil</em>
+        to generate a stable <strong>Heaven Gateway</strong>—an elliptical portal that bends the space-time continuum.
+        Your body's bio-field is synchronised with the gateway's frequency, allowing safe passage
+        through time and space. ✨
+      </div>
+
+      <button class="btn-primary" onclick="resetGame()">▶ Play Again</button>
+    </div>
+  `;
+}
+
+function resetGame() {
+  collectedComponents.clear();
+  deviceCharge = 0;
+  if (gatewayAnimFrame) { cancelAnimationFrame(gatewayAnimFrame); gatewayAnimFrame = null; }
+  render(1);
+}
+
+// Start the game
+render(1);
+</script>
+</body>
+</html>
