@@ -1,0 +1,75 @@
+name: Deploy Smart Contract
+
+on:
+  workflow_dispatch:
+    inputs:
+      network:
+        description: "Target network"
+        required: true
+        default: "amoy"
+        type: choice
+        options:
+          - amoy
+          - polygon
+      initial_supply:
+        description: "Initial token supply (default: 1000000000)"
+        required: false
+        default: "1000000000"
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Compile & Deploy PHU81
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+          cache: "npm"
+          cache-dependency-path: smart-contract/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: smart-contract
+
+      - name: Compile contracts
+        run: npx hardhat compile
+        working-directory: smart-contract
+
+      - name: Run tests
+        run: npx hardhat test
+        working-directory: smart-contract
+        env:
+          REPORT_GAS: "false"
+
+      - name: Deploy to ${{ github.event.inputs.network }}
+        run: npx hardhat run scripts/deploy.js --network ${{ github.event.inputs.network }}
+        working-directory: smart-contract
+        env:
+          POLYGON_RPC_URL: ${{ secrets.POLYGON_RPC_URL }}
+          AMOY_RPC_URL: ${{ secrets.AMOY_RPC_URL }}
+          PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+          POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
+          INITIAL_SUPPLY: ${{ github.event.inputs.initial_supply }}
+
+      - name: Upload deployment artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-${{ github.event.inputs.network }}-${{ github.run_id }}
+          path: smart-contract/deployment.json
+
+      - name: Verify contract on Polygonscan
+        run: |
+          ADDRESS=$(node -e "const d=require('./deployment.json'); console.log(d.address);")
+          SUPPLY="${{ github.event.inputs.initial_supply }}"
+          npx hardhat verify --network ${{ github.event.inputs.network }} "$ADDRESS" "$SUPPLY"
+        working-directory: smart-contract
+        env:
+          POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
+        continue-on-error: true # Verification is best-effort
