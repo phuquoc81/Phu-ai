@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phu AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #58a6ff, #a371f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    select, button {
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #e6edf3;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    select:hover, button:hover { border-color: #58a6ff; }
+    select:focus, button:focus { outline: none; border-color: #58a6ff; }
+
+    .mode-toggle {
+      display: flex;
+      background: #21262d;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .mode-toggle button {
+      border: none;
+      border-radius: 0;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+    }
+
+    .mode-toggle button.active {
+      background: #1f6feb;
+      color: #fff;
+    }
+
+    #chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message {
+      max-width: 780px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      line-height: 1.6;
+      font-size: 0.92rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .message.user {
+      background: #1f6feb;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    .message.assistant {
+      background: #161b22;
+      border: 1px solid #30363d;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+
+    .message.assistant .model-tag {
+      font-size: 0.72rem;
+      color: #8b949e;
+      margin-bottom: 6px;
+    }
+
+    .message.copilot {
+      border-color: #a371f7;
+    }
+
+    .message.copilot .model-tag {
+      color: #a371f7;
+    }
+
+    .message.error {
+      background: #3d1a1a;
+      border-color: #f85149;
+      color: #f85149;
+      align-self: flex-start;
+    }
+
+    .typing-indicator {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 12px 16px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      align-self: flex-start;
+    }
+
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      background: #58a6ff;
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-6px); }
+    }
+
+    footer {
+      background: #161b22;
+      border-top: 1px solid #30363d;
+      padding: 16px 24px;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    textarea {
+      flex: 1;
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #e6edf3;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      resize: none;
+      font-family: inherit;
+      min-height: 44px;
+      max-height: 160px;
+      overflow-y: auto;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus { outline: none; border-color: #58a6ff; }
+
+    #send-btn {
+      background: #1f6feb;
+      border: none;
+      color: #fff;
+      border-radius: 8px;
+      padding: 0 18px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    #send-btn:hover { background: #388bfd; }
+    #send-btn:disabled { background: #21262d; color: #6e7681; cursor: not-allowed; }
+
+    .welcome {
+      text-align: center;
+      color: #8b949e;
+      margin: auto;
+      padding: 40px;
+    }
+
+    .welcome h2 {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #58a6ff, #a371f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .welcome p { font-size: 0.95rem; line-height: 1.7; max-width: 560px; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .badge.copilot-badge { background: #1f2d48; color: #a371f7; border: 1px solid #a371f7; }
+    .badge.gpt-badge { background: #1a2d1a; color: #3fb950; border: 1px solid #3fb950; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Phu AI</h1>
+  <span class="badge gpt-badge">GPT-5.5</span>
+  <span class="badge copilot-badge">Copilot Extension</span>
+
+  <div class="controls">
+    <label for="model-select" style="font-size:0.82rem;color:#8b949e;">Model:</label>
+    <select id="model-select">
+      <option value="gpt-5.5">GPT-5.5</option>
+      <option value="gpt-4o">GPT-4o</option>
+      <option value="gpt-4-turbo">GPT-4 Turbo</option>
+    </select>
+
+    <div class="mode-toggle">
+      <button id="btn-general" class="active" onclick="setMode('general')">General</button>
+      <button id="btn-copilot" onclick="setMode('copilot')">Copilot</button>
+    </div>
+
+    <button onclick="clearChat()">Clear</button>
+  </div>
+</header>
+
+<div id="chat-container">
+  <div class="welcome" id="welcome-msg">
+    <h2>Welcome to Phu AI</h2>
+    <p>
+      Your intelligent assistant powered by <strong>GPT-5.5</strong>.<br /><br />
+      Switch to <strong>Copilot mode</strong> for AI-powered code assistance, debugging, and code review —
+      or use <strong>General mode</strong> for broad problem-solving, science, math, and more.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="input-area">
+    <textarea
+      id="user-input"
+      placeholder="Ask Phu AI anything… (Shift+Enter for new line, Enter to send)"
+      rows="1"
+      onkeydown="handleKey(event)"
+      oninput="autoResize(this)"
+    ></textarea>
+    <button id="send-btn" onclick="sendMessage()">Send</button>
+  </div>
+</footer>
+
+<script>
+  let currentMode = 'general';
+  const history = [];
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('btn-general').classList.toggle('active', mode === 'general');
+    document.getElementById('btn-copilot').classList.toggle('active', mode === 'copilot');
+    document.getElementById('user-input').placeholder =
+      mode === 'copilot'
+        ? 'Ask Phu AI Copilot for code help, debugging, or review…'
+        : 'Ask Phu AI anything…';
+  }
+
+  function clearChat() {
+    history.length = 0;
+    const container = document.getElementById('chat-container');
+    container.innerHTML = `
+      <div class="welcome" id="welcome-msg">
+        <h2>Welcome to Phu AI</h2>
+        <p>
+          Your intelligent assistant powered by <strong>GPT-5.5</strong>.<br /><br />
+          Switch to <strong>Copilot mode</strong> for AI-powered code assistance, debugging, and code review —
+          or use <strong>General mode</strong> for broad problem-solving, science, math, and more.
+        </p>
+      </div>`;
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 160) + 'px';
+  }
+
+  function appendMessage(role, text, model, mode) {
+    const welcome = document.getElementById('welcome-msg');
+    if (welcome) welcome.remove();
+
+    const container = document.getElementById('chat-container');
+    const div = document.createElement('div');
+    div.className = 'message ' + role;
+
+    if (role === 'assistant') {
+      const isCopilot = mode === 'copilot';
+      if (isCopilot) div.classList.add('copilot');
+      const tag = document.createElement('div');
+      tag.className = 'model-tag';
+      tag.textContent = isCopilot ? `Phu AI Copilot · ${model}` : `Phu AI · ${model}`;
+      div.appendChild(tag);
+    }
+
+    const content = document.createElement('div');
+    content.textContent = text;
+    div.appendChild(content);
+
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function appendError(text) {
+    const container = document.getElementById('chat-container');
+    const div = document.createElement('div');
+    div.className = 'message error';
+    div.textContent = text;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function showTyping() {
+    const container = document.getElementById('chat-container');
+    const div = document.createElement('div');
+    div.className = 'typing-indicator';
+    div.id = 'typing';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function hideTyping() {
+    const el = document.getElementById('typing');
+    if (el) el.remove();
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const message = input.value.trim();
+    if (!message) return;
+
+    const model = document.getElementById('model-select').value;
+    const sendBtn = document.getElementById('send-btn');
+
+    input.value = '';
+    input.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    appendMessage('user', message, model, currentMode);
+    history.push({ role: 'user', content: message });
+
+    showTyping();
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, model, mode: currentMode, history: history.slice(0, -1) }),
+      });
+
+      const data = await res.json();
+      hideTyping();
+
+      if (!res.ok) {
+        appendError('Error: ' + (data.error || 'Unknown error'));
+      } else {
+        appendMessage('assistant', data.reply, data.model, data.mode);
+        history.push({ role: 'assistant', content: data.reply });
+      }
+    } catch (err) {
+      hideTyping();
+      appendError('Network error: ' + err.message);
+    }
+
+    sendBtn.disabled = false;
+    input.focus();
+  }
+</script>
+</body>
+</html>
