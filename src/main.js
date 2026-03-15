@@ -2,13 +2,14 @@ import './style.css'
 
 const STORAGE_KEY = 'antimatter-reactor-state'
 const BREACH_POINT = 100
+const INITIAL_ENTROPY = 18
 
 const defaultState = {
   antimatter: 0,
   reactors: 0,
   stabilizers: 0,
   fragments: 0,
-  entropy: 18,
+  entropy: INITIAL_ENTROPY,
   totalAntimatter: 0,
   totalClicks: 0,
   status: 'Boot the containment core and begin condensing antimatter.'
