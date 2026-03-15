@@ -1,0 +1,284 @@
+:root {
+  color: #f4f8ff;
+  background:
+    radial-gradient(circle at top, rgba(106, 0, 255, 0.35), transparent 38%),
+    linear-gradient(180deg, #02030a 0%, #0a1022 48%, #03050c 100%);
+  font-family:
+    Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(97, 218, 251, 0.18), transparent 20%),
+    radial-gradient(circle at 80% 25%, rgba(187, 134, 252, 0.18), transparent 22%);
+  pointer-events: none;
+}
+
+#app {
+  min-height: 100vh;
+  padding: 32px 16px 48px;
+}
+
+.game-shell {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.hero-card,
+.panel,
+.stat-card {
+  border: 1px solid rgba(164, 181, 255, 0.16);
+  background: rgba(6, 10, 24, 0.78);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.34);
+}
+
+.hero-card {
+  border-radius: 28px;
+  padding: 32px;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: #8db6ff;
+  font-size: 0.78rem;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  line-height: 0.95;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 1.35rem;
+  margin-bottom: 24px;
+}
+
+h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.hero-copy,
+.system-row p,
+.stat-meta {
+  color: #b1bed6;
+}
+
+.hero-copy {
+  max-width: 64ch;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 24px 0 18px;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 20px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    opacity 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.primary-action {
+  background: linear-gradient(135deg, #ab52ff, #5f7cff);
+  color: white;
+  box-shadow: 0 12px 30px rgba(95, 124, 255, 0.28);
+}
+
+.secondary-action,
+.panel-button {
+  background: rgba(152, 179, 255, 0.12);
+  color: #eff4ff;
+  border: 1px solid rgba(152, 179, 255, 0.16);
+}
+
+.status-text {
+  min-height: 1.5em;
+  color: #90f3d1;
+}
+
+.dashboard {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stat-card {
+  border-radius: 22px;
+  padding: 22px;
+  display: grid;
+  gap: 10px;
+}
+
+.stat-card.accent {
+  background:
+    linear-gradient(135deg, rgba(171, 82, 255, 0.2), rgba(95, 124, 255, 0.15)),
+    rgba(6, 10, 24, 0.82);
+}
+
+.stat-label {
+  color: #92a4c7;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stat-value {
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+}
+
+.meter {
+  height: 12px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.meter-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #62f2bf, #ffd76c, #ff6f91);
+  transition: width 0.2s ease;
+}
+
+.systems-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1.2fr 0.8fr;
+}
+
+.panel {
+  border-radius: 24px;
+  padding: 28px;
+}
+
+.system-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 0;
+  border-top: 1px solid rgba(164, 181, 255, 0.12);
+}
+
+.system-row:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.telemetry-list {
+  display: grid;
+  gap: 18px;
+}
+
+.telemetry-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #b1bed6;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(164, 181, 255, 0.12);
+}
+
+.telemetry-list div:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.telemetry-list dd {
+  color: #fff;
+  font-weight: 700;
+}
+
+body[data-containment='strained'] .hero-card {
+  border-color: rgba(255, 208, 108, 0.32);
+}
+
+body[data-containment='critical'] .hero-card {
+  border-color: rgba(255, 111, 145, 0.42);
+  box-shadow: 0 22px 55px rgba(255, 111, 145, 0.2);
+}
+
+@media (max-width: 900px) {
+  .dashboard,
+  .systems-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .system-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .panel-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  #app {
+    padding-inline: 12px;
+  }
+
+  .hero-card,
+  .panel,
+  .stat-card {
+    padding: 20px;
+  }
+
+  .hero-actions button {
+    width: 100%;
+  }
+}
